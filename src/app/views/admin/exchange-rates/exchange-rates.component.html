@@ -1,4 +1,64 @@
-<div class="animated fadeIn">
+<!--New Exchange Rate View-->
+<div class="main-panel">
+  <div class="main-content">
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <h2 class="content-header">Exchange Rates</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg col-lg-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title-wrap bar-success">
+                  <button class="btn btn-primary block" (click)="openAddRateModal(exchangeRates)">Add Provider</button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="px-3">
+                  <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                      <th width="2%"></th>
+                      <th width="10%">No.</th>
+                      <th width="20%">Curreny</th>
+                      <th width="20%">Rate</th>
+                      <th width="10%">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="exchangeRateList.length > 0">
+                    <tr *ngFor="let d of exchangeRateList">
+                      <td>
+                        <div class="btn-group" dropdown>
+                          <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                          <ul *dropdownMenu class="dropdown-menu" role="menu">
+                            <li role="menuitem">
+                              <a class="dropdown-item" (click)="openUpdateExchangeRateModal(d, updateExchangeRate)">Update </a></li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td>{{d.id}}</td>
+                      <td>{{d.currency}}</td>
+                      <td>{{d.rate}}</td>
+                      <td>{{d.date}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Old Exchange Rate View-->
+<!-- <div class="animated fadeIn">
   <div class="row">
     <div class="col-lg col-lg-12">
       <tabset>
@@ -50,7 +110,7 @@
       </tabset>
     </div>
   </div>
-</div>
+</div> -->
 
 <ng-template #exchangeRates>
   <div class="modal-header">
