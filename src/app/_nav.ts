@@ -16,10 +16,6 @@ export class MenuItems {
             icon: 'icon-speedometer'
           },
           {
-            name: 'Setup',
-            title: true
-          },
-          {
             name: 'Add user',
             url: '/admin/user',
             icon: 'icon-user'
