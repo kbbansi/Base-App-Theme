@@ -1,0 +1,148 @@
+<div class="animate FadeIn">
+  <div class="row">
+    <div class="col-lg col-lg-12">
+      <tabset>
+        <tab heading="Today's Attendance">
+          <!-- this displays all attendance for the day -->
+          <div class="row">
+            <div class="col-lg col-lg-12">
+
+
+              <div class="card">
+                <div class="card-header">Attendance</div>
+                <div class="card-body">
+                  <!-- <p>
+                                          <button class="btn btn-primary block" (click)="opendepartmentsmodal(departmentmodal)"> Add New </button></p> -->
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th width="2%">No.</th>
+                        <th width="20%">Employee ID</th>
+                        <th width="20%">Name</th>
+                        <th width="20%">Time</th>
+                        <th width="20%">Type</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="attendancelist.length > 0">
+                      <tr *ngFor="let a of attendancelist">
+                        <td>{{a.id}}</td>
+                        <td>{{a.employeeid}}</td>
+                        <td>{{a.name}}</td>
+                        <td>{{a.time}}</td>
+                        <td>{{a.type}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tab>
+        <tab heading="Previous Attendance">
+          <div class="row">
+            <div class="col-lg-3">
+              <form [formGroup]="previousAttendanceForm">
+                <div class="form-group">
+                  <label>Date</label>
+                  <input type="text" class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker
+                    formControlName="previousDate" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD'}">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-success" (click)="datepickerYMD.toggle()"
+                    [attr.aria-expanded]="datepickerYMD.isOpen">Date Picker</button>
+                </div>
+                <div class="form-group">
+                  <p>
+                    <button class="btn btn-primary block" (click)="loadPreviousAttendance()">Load Attendance</button>
+                  </p>
+                </div>
+              </form>
+            </div>
+            <div class="col-lg-9">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th width="2%">No.</th>
+                    <th width="20%">Employee ID</th>
+                    <th width="20%">Name</th>
+                    <th width="20%">Clock In</th>
+                    <th width="20%">Clock Out</th>
+                    <th width="20%">Type</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="previousAttendanceList.length > 0">
+                  <tr *ngFor="let p of previousAttendanceList">
+                    <td>{{ p.id }}</td>
+                    <td>{{ p.employeeid }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.time }}</td>
+                    <td>{{ p.time }}</td>
+                    <td>{{ p.type }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </tab>
+        <tab heading="Reports and Analytics">
+          <div class="row">
+            <div class="col-lg-3">
+              <form [formGroup]="attendanceReportsForm">
+                <div class="form-group">
+                  <label for="">Report Type</label>
+                  <select formControlName="reportType" class="form-control">
+                    <!-- Look for a way to dynamically populate this select using typescript -->
+                    <option [value]="'/early_comers_day/'">Early Reporting Time</option>
+                    <option [value]="'/late_comers_day/'">Late Comers</option>
+                    <option [value]="'/early_leavers_day/'">Early Leavers</option>
+                    <option [value]="'/late_leavers_day/'">Late Leavers</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Date</label>
+                  <input type="text" class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker
+                    formControlName="date" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" placeholder="Select a Date">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-success" (click)="datepickerYMD.toggle()"
+                    [attr.aria-expanded]="datepickerYMD.isOpen">Date Picker</button>
+                </div>
+                <div class="form-group">
+                  <p><button class="btn btn-primary" (click)="loadAttendanceReport()">Load Report</button></p>
+                </div>
+              </form>
+            </div>
+            <div class="col-lg-9">
+              <p>
+                <button class="btn btn-success block" (click)="exportReport()">Export to Excel
+                </button>
+              </p>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th width="2%">No.</th>
+                    <th width="20%">Date</th>
+                    <th width="20%">Employee ID</th>
+                    <th width="20%">Name</th>
+                    <th width="20%">Time</th>
+                    <th width="20%">Type</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="attendanceReportList.length > 0">
+                  <tr *ngFor="let r of attendanceReportList">
+                    <td>{{ r.id }}</td>
+                    <td>{{ r.date }}</td>
+                    <td>{{ r.employeeid }}</td>
+                    <td>{{ r.name }}</td>
+                    <td>{{ r.time }}</td>
+                    <td>{{ r.type }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>

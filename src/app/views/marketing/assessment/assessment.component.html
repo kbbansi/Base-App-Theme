@@ -1,0 +1,82 @@
+<div class="animated FadeIn">
+  <div class="row">
+    <div class="col-12 col-lg-12 col-md-12">
+      <div class="card">
+          <div class="card-header">Assessment Status</div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th width="5%"></th>
+                  <th width="20%">Date</th>
+                  <th width="55%">Name</th>
+                  <th width="20%">Status</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="assessmentList?.length > 0">
+                <tr *ngFor="let d of assessmentList">
+                  <td><div class="btn-group" dropdown>
+                      <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                           <ul *dropdownMenu class="dropdown-menu" role="menu">
+                             <li role="menuitem"><a class="dropdown-item" >View</a></li>
+                             <li role="menuitem"><a class="dropdown-item" (click)="addService(d, serviceTemplate)" >Add Service</a></li>
+
+                           </ul>
+                         </div></td>
+                  <td>{{d.date}}</td>
+                  <td>{{d.name}}</td>
+                  <td>{{d.status}}</td>
+                </tr>
+              </tbody>
+              <p *ngIf="assessmentList?.length === 0">No Prospects</p>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Template -->
+<ng-template #serviceTemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Assessment Request</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+      <div class="modal-body">
+          <form [formGroup]="servicesForm">
+            <div class="form-group">
+              <label>Prospect</label>
+              <input type="text" class="form-control" formControlName="prospect" [readOnly]=true>
+            </div>
+
+            <div class="form-group">
+                <label>Service</label>
+                <select class="form-control" formControlName="service" *ngIf="serviceList.length > 0">
+                  <option *ngFor="let d of serviceList" [value]="d.id">{{d.name}}</option>
+                </select>
+            </div>
+            <button class="btn btn-primary block" [disabled]="servicesForm.invalid"  (click)="saveService()">Save</button>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th width="100%">Service</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="assessmentServices.length > 0">
+            <tr  *ngFor="let d of assessmentServices">
+              <td>{{d.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+  </ng-template>
+
+

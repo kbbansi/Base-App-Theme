@@ -1,0 +1,15 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-xs-12 col-md-5 formGroup">
+      <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="dateYMD" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+    </div>
+    <div class="col-xs-12 col-md-3 formGroup">
+      <button class="btn btn-success" (click)="datepickerYMD.toggle()" [attr.aria-expanded]="datepickerYMD.isOpen">Date Picker</button>
+    </div>
+    <div class="form-group">
+      <p>
+        <button class="btn btn-primary block" (click)="showDate()">Load Attendance</button>
+      </p>
+    </div>
+  </div>
+</form>

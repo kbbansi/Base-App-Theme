@@ -1,0 +1,356 @@
+<div class="animate FadeIn">
+  <div class="row">
+    <div class="col-lg col-lg-12">
+
+
+      <div class="card">
+        <div class="card-header">REQUEST</div>
+        <div class="card-body">
+
+          <p>
+            <!-- <button class="btn btn-primary block" (click)="openemployeemodal(employeemodal)"> Load </button></p> -->
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th width="2%"></th>
+
+                  <th width="10%">EmpID</th>
+                  <th width="10%">Employee</th>
+                  <th width="20%">Date From</th>
+                  <th width="20%">Date To</th>
+                  <th width="10%">Type</th>
+                  <th width="10%">Region</th>
+                  <th width="10%">Country</th>
+
+                </tr>
+              </thead>
+              <tbody *ngIf="requestlist.length > 0">
+                <tr *ngFor="let d of requestlist">
+
+
+                  <td>
+                    <div class="btn-group" dropdown>
+                      <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                      <ul *dropdownMenu class="dropdown-menu" role="menu">
+
+                        <li role="menuitem"><a class="dropdown-item" (click)="openfeesmodal(d, feesmodal)">Fees </a>
+                        </li>
+
+
+
+
+                      </ul>
+
+                    </div>
+                  </td>
+                  <td>{{d.employeeid}}</td>
+                  <td>{{d.firstname}} {{d.lastname}}</td>
+                  <td>{{d.datefrom | date:'mediumDate'}} </td>
+                  <td>{{d.dateto | date:'mediumDate'}} </td>
+                  <td>{{d.type}}</td>
+                  <td>{{d.region}}</td>
+                  <td>{{d.country}}</td>
+                </tr>
+              </tbody>
+
+
+            </table>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #feesmodal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Add Fees - {{empname}} </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]="feesmodalForm">
+    <div class="modal-body">
+
+
+      <div class="row" hidden>
+
+        <div class="col">
+
+          <div class="form-group">
+            <label>Employee ID</label>
+            <input type="text" formControlName="employeeid" class="form-control">
+          </div>
+        </div>
+        <div class="col">
+
+
+          <div class="form-group">
+            <label>Request ID</label>
+            <input type="text" formControlName="requestid" class="form-control">
+          </div>
+        </div>
+
+        <div class="col">
+
+
+          <div class="form-group">
+            <label>Rank</label>
+            <input type="text" formControlName="rank" class="form-control">
+          </div>
+        </div>
+
+
+        <div class="col">
+
+
+          <div class="form-group">
+            <label>Department</label>
+            <input type="text" formControlName="department" class="form-control">
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+      <div class="form-group">
+        <label>Type</label>
+        <select class="form-control" #type formControlName="type">
+          <option>Visa</option>
+          <option>Imprest</option>
+          <option>Medical Provider</option>
+          <option>Course Provider</option>
+          <option>Travel Agent</option>
+          <option>Clothing</option>
+
+        </select>
+      </div>
+
+
+      <div class="row">
+
+        <div class="col">
+
+          <div class="form-group" *ngIf="this.feesmodalForm.get('type').value==='Travel Agent'">
+            <label>Travel Agent</label>
+            <select class="form-control" #travelagent formControlName="travelagent" *ngIf="travelagentlist.length > 0">
+              <option *ngFor="let d of travelagentlist" value="{{d.id}}">{{d.name}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-group" *ngIf="this.feesmodalForm.get('type').value==='Travel Agent'">
+            <label>Invoice</label>
+            <input type="text" formControlName="invoice" class="form-control">
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group" *ngIf="this.feesmodalForm.get('type').value==='Medical Provider'">
+        <label>Medical Provider</label>
+        <select class="form-control" #medicalprovider formControlName="medicalprovider"
+          *ngIf="medicalproviderlist.length > 0">
+          <option *ngFor="let d of medicalproviderlist" value="{{d.id}}">{{d.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="this.feesmodalForm.get('type').value==='Course Provider'">
+        <label>Course Provider</label>
+        <select class="form-control" #courseprovider formControlName="courseprovider"
+          *ngIf="courseproviderlist.length > 0" (change)="calc()">
+          <option *ngFor="let d of courseproviderlist" value="{{d.id}}">{{d.name}}</option>
+        </select>
+      </div>
+
+
+      <div class="row">
+
+
+        <div class="col">
+          <div class="form-group">
+            <label>Amount</label>
+            <input type="number" min=1 formControlName="amount" class="form-control">
+          </div>
+
+        </div>
+
+        <div class="col">
+
+          <div class="form-group">
+            <label>Currency</label>
+            <select class="form-control" #currency (change)="calc()" formControlName="currency"
+              *ngIf="currencylist.length > 0">
+              <option *ngFor="let d of currencylist" value="{{d.currency}}">{{d.currency}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-group">
+            <label>Rate</label>
+            <input type="text" formControlName="exchangerate" class="form-control" readonly="">
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="row">
+
+        <div class="col">
+
+          <div class="form-group">
+            <label>Total</label>
+            <input type="text" formControlName="total" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="col">
+
+
+          <div class="form-group">
+            <label>Date Paid</label>
+            <input type="date" formControlName="datepaid" class="form-control">
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+
+      <p>
+        <button class="btn btn-primary" (click)="savefees()" [disabled]="feesmodalForm.invalid">Save</button>
+      </p>
+
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+
+            <th width="20%">Date</th>
+            <th width="10%">Type</th>
+            <th width="20%">Emp ID</th>
+            <th width="10%">Per Diem (USD)</th>
+            <th width="20%">Currency</th>
+            <th width="20%">Amount</th>
+            <th width="10%">Total</th>
+
+
+          </tr>
+        </thead>
+        <tbody *ngIf="feeslist.length > 0">
+          <tr *ngFor="let d of feeslist">
+
+            <td>{{d.datepaid | date:'mediumDate'}}</td>
+            <td>{{d.type}}</td>
+            <td>{{d.employeeid}}</td>
+            <td>{{d.perdiem}} </td>
+            <td>{{d.currency}} </td>
+            <td>{{d.amount}} </td>
+            <td>{{d.total}} </td>
+
+          </tr>
+        </tbody>
+
+
+      </table>
+
+
+
+
+    </div>
+    <!--        <div class="modal-footer">
+                <button class="btn btn-primary" (click)="savefees()" [disabled]="feesmodalForm.invalid">Save</button>
+              </div> -->
+  </form>
+</ng-template>
+
+
+
+
+<!-- 
+  
+  <ng-template #employeemodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Employee</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "employeemodalForm">
+              <div class="modal-body">
+                  
+                   <div class="form-group">
+                      <label>Employee ID</label>
+                      <input type="text" formControlName="employeeid" class="form-control" >
+                  </div>
+                
+
+                  <div class="form-group">
+                      <label>Last Name</label>
+                      <input type="text" formControlName="lastname" class="form-control" >
+                  </div>
+
+                  <div class="form-group">
+                      <label>First Name</label>
+                      <input type="text" formControlName="firstname" class="form-control" >
+                  </div>
+                
+
+
+                  <div class="form-group">
+                    <label>Department</label>
+                     <select class="form-control" #department  formControlName="department" *ngIf="departmentlist.length > 0">
+                      <option *ngFor="let d of departmentlist" value="{{d.name}}" >{{d.name}}</option>
+                    </select>
+                  </div>
+
+                   <div class="form-group">
+                    <label>Unit</label>
+                     <select class="form-control" #unit  formControlName="unit" *ngIf="unitlist.length > 0">
+                      <option *ngFor="let d of unitlist" value="{{d.name}}" >{{d.name}}</option>
+                    </select>
+                  </div>
+
+                      <div class="form-group">
+                    <label>Rank</label>
+                     <select class="form-control" #rank  formControlName="rank" *ngIf="ranklist.length > 0">
+                      <option *ngFor="let d of ranklist" value="{{d.name}}" >{{d.name}}</option>
+                    </select>
+                  </div>
+                                       
+                   <div class="form-group">
+                    <label>Office Location</label>
+                     <select class="form-control" #officelocation  formControlName="officelocation" *ngIf="officelocationlist.length > 0">
+                      <option *ngFor="let d of officelocationlist" value="{{d.location}}" >{{d.location}}</option>
+                    </select>
+                  </div>
+
+                   <div class="form-group">
+                      <label>Mobile No</label>
+                      <input type="text" formControlName="mobileno" class="form-control" >
+                  </div>
+                
+
+
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="saveemployee()" >Save</button>
+              </div>
+    </form>
+</ng-template>
+ -->

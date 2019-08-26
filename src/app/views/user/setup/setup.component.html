@@ -1,0 +1,661 @@
+<div class="animate FadeIn">
+  <div class="row">
+    <div class="col-lg col-lg-12">
+      <tabset>
+
+
+               <tab heading="Currency">
+                          
+                        <p><button class="btn btn-primary block" (click)="opencurrencymodal(currencymodal)"> Add New </button></p>
+                              
+                         <table class="table table-striped">
+                              <thead>
+                                <tr>
+                            
+                                  <th width="11%">ID</th>
+                                  <th width="12%">Name</th>
+                                
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="currencylist.length > 0">
+
+                                <tr *ngFor="let d of currencylist ">
+
+                                  <td>{{d.id}}</td>
+                                  <td>{{d.name}}</td>
+                              
+                                </tr>
+                              </tbody>
+                      </table>
+            </tab>
+
+             <tab heading="Exchange Rate">
+                          
+                       <p><button class="btn btn-primary block" (click)="openexchangemodal(exchangemodal)"> Add New </button></p>
+                              
+                         <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  
+                                  <th width="2%"></th>
+                                  <th width="11%">ID</th>
+                                  <th width="11%">Currency</th>
+                                  <th width="12%">Date</th>
+                                  <th width="12%">Rate</th>
+
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="exchangelist.length > 0">
+                            
+
+                                <tr *ngFor="let d of exchangelist ">
+                                  <td>  
+                                        <div class="btn-group" dropdown>
+                                           <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                                              <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                                <li role="menuitem"><a class="dropdown-item" (click)="openupdateexchangemodal(d, updateexchangemodal)" >Update </a>
+                                                </li>
+
+                                              
+                                          </ul>
+                                                                  
+                                  </div>
+                                  <td>{{d.id}}</td>
+                                  <td>{{d.currency}}</td>
+                                  <td>{{d.date}}</td>
+                                  <td>{{d.rate}}</td>
+
+                                </tr>
+                              </tbody>
+                      </table>
+            </tab>
+
+
+
+             <tab heading="Department">
+                          
+                 <p><button class="btn btn-primary block" (click)="opendepartmentmodal(departmentmodal)"> Add New </button></p>
+                              
+                         <table class="table table-striped">
+                              <thead>
+                                <tr>
+                            
+                                  <th width="11%">ID</th>
+                                  <th width="12%">Name</th>
+                                
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="departmentlist.length > 0">
+                              
+                                <tr *ngFor="let d of departmentlist">
+
+                                   <td>{{d.id}}</td>
+                                   <td>{{d.name}}</td>
+                              
+                                </tr>
+                              </tbody>
+                      </table>
+            </tab>
+
+
+            <tab heading="Unit">
+                          
+                   <p><button class="btn btn-primary block" (click)="openunitmodal(unitmodal)"> Add New </button></p>
+                              
+                         <table class="table table-striped">
+                              <thead>
+                                <tr>
+                            
+                                  <th width="11%">ID</th>
+                                  <th width="12%">Name</th>
+                                
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="unitlist.length > 0">
+                              
+                                <tr *ngFor="let d of unitlist">
+
+                                   <td>{{d.id}}</td>
+                                   <td>{{d.name}}</td>
+                              
+                                </tr>
+                              </tbody>
+                      </table>
+            </tab>
+
+         <tab heading="Per Diem">
+                          
+                         
+                   <p><button class="btn btn-primary block" (click)="openrankmodal(rankmodal)"> Add New </button></p>
+                              
+                         <table class="table table-striped">
+                              <thead>
+                                <tr>
+                            
+                                  <th width="11%">ID</th>
+                                  <th width="12%">Rank</th>
+                                  <th width="12%">Region</th>
+                                  <th width="12%">Per Diem</th>
+                                
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="ranklist.length > 0">
+                              
+                                <tr *ngFor="let d of ranklist">
+
+                                   <td>{{d.id}}</td>
+                                   <td>{{d.name}}</td>
+                                   <td>{{d.region}}</td>
+                                   <td>{{d.perdiem}}</td>
+                                </tr>
+                              </tbody>
+                      </table>
+            </tab>
+
+         <tab heading="Office Location">
+                          
+                         
+                   <p><button class="btn btn-primary block" (click)="openofficelocationmodal(officelocationmodal)"> Add New </button></p>
+                              
+                         <table class="table table-striped">
+                              <thead>
+                                <tr>
+                            
+                                  <th width="11%">ID</th>
+                                  <th width="12%">Location</th>
+                                
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="officelocationlist.length > 0">
+                              
+                                <tr *ngFor="let d of officelocationlist">
+
+                                   <td>{{d.id}}</td>
+                                   <td>{{d.location}}</td>
+                              
+                                </tr>
+                              </tbody>
+                      </table>
+            </tab>
+
+         <tab heading="Course Provider">
+                          
+                    <p><button class="btn btn-primary block" (click)="opencourseprovidermodal(courseprovidermodal)"> Add New </button></p>
+                              
+                         <table class="table table-striped">
+                              <thead>
+                                <tr>
+                            
+                                  <th width="11%">ID</th>
+                                  <th width="12%">Name</th>
+                                   <th width="12%">Address</th>
+                                
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="courseproviderlist.length > 0">
+                              
+                                <tr *ngFor="let d of courseproviderlist">
+
+                                   <td>{{d.id}}</td>
+                                   <td>{{d.name}}</td>
+                                   <td>{{d.address}}</td>
+                              
+                                </tr>
+                              </tbody>
+                      </table>
+            </tab>
+
+         <tab heading="Course">
+                          
+                   <p><button class="btn btn-primary block" (click)="opencoursemodal(coursemodal)"> Add New </button></p>
+                              
+                         <table class="table table-striped">
+                              <thead>
+                                <tr>
+                            
+                                  <th width="11%">ID</th>
+                                  <th width="12%">Name</th>
+                                   <th width="12%">Description</th>
+                                
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="courselist.length > 0">
+                              
+                                <tr *ngFor="let d of courselist">
+
+                                   <td>{{d.id}}</td>
+                                   <td>{{d.name}}</td>
+                                   <td>{{d.description}}</td>
+                              
+                                </tr>
+                              </tbody>
+                      </table>
+            </tab>
+
+         <tab heading="Medical Facility">
+                          
+                   <p><button class="btn btn-primary block" (click)="openmedicalfacilitymodal(medicalfacilitymodal)"> Add New </button></p>
+                              
+                         <table class="table table-striped">
+                              <thead>
+                                <tr>
+                            
+                                  <th width="11%">ID</th>
+                                  <th width="12%">Name</th>
+                                   <th width="12%">Address</th>
+                                
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="medicalfacilitylist.length > 0">
+                              
+                                <tr *ngFor="let d of medicalfacilitylist">
+
+                                   <td>{{d.id}}</td>
+                                   <td>{{d.name}}</td>
+                                   <td>{{d.address}}</td>
+                              
+                                </tr>
+                              </tbody>
+                      </table>
+            </tab>
+
+         <tab heading="Travel Agent">
+                    <p><button class="btn btn-primary block" (click)="opentravelagentmodal(travelagentmodal)"> Add New </button></p>
+                              
+                         <table class="table table-striped">
+                              <thead>
+                                <tr>
+                            
+                                  <th width="11%">ID</th>
+                                  <th width="12%">Name</th>
+                                  <th width="12%">Address</th>
+                                  <th width="12%">Contact Number</th>
+                                
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="travelagentlist.length > 0">
+                              
+                                <tr *ngFor="let d of travelagentlist">
+
+                                   <td>{{d.id}}</td>
+                                   <td>{{d.name}}</td>
+                                   <td>{{d.address}}</td>
+                                   <td>{{d.contact}}</td>
+
+                                </tr>
+                              </tbody>
+                      </table>
+            </tab>
+
+          
+          
+
+
+      </tabset>
+      
+    </div>
+  </div>
+</div>
+
+
+<ng-template #travelagentmodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Travel Agent</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "travelagentmodalForm">
+              <div class="modal-body">
+                 
+                  <div class="form-group">
+                      <label>Name</label>
+                      <input type="text" formControlName="name" class="form-control" >
+                  </div>
+
+                  <div class="form-group">
+                      <label>Address</label>
+                      <input type="text" formControlName="address" class="form-control" >
+                  </div>
+                                
+                 <div class="form-group">
+                      <label>Contact Number</label>
+                      <input type="text" formControlName="contact" class="form-control" >
+                  </div>       
+                  
+                
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="savetravelagent()" [disabled]="travelagentmodalForm.invalid">Save</button>
+              </div>
+    </form>
+</ng-template>
+
+
+<ng-template #medicalfacilitymodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Medical Facility</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "medicalfacilitymodalForm">
+              <div class="modal-body">
+                 
+                  <div class="form-group">
+                      <label>Name</label>
+                      <input type="text" formControlName="name" class="form-control" >
+                  </div>
+
+                   <div class="form-group">
+                      <label>Address</label>
+                      <input type="text" formControlName="address" class="form-control" >
+                  </div>
+                           
+                                       
+                  
+                
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="savemedicalfacility()" [disabled]="medicalfacilitymodalForm.invalid">Save</button>
+              </div>
+    </form>
+</ng-template>
+
+
+
+<ng-template #coursemodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Course</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "coursemodalForm">
+              <div class="modal-body">
+                 
+                  <div class="form-group">
+                      <label>Name</label>
+                      <input type="text" formControlName="name" class="form-control" >
+                  </div>  
+
+                  <div class="form-group">
+                      <label>Description</label>
+                      <input type="text" formControlName="description" class="form-control" >
+                  </div>
+                           
+                                       
+                  
+                
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="savecourse()" [disabled]="coursemodalForm.invalid">Save</button>
+              </div>
+    </form>
+</ng-template>
+
+
+
+<ng-template #courseprovidermodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Course Provider</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "courseprovidermodalForm">
+              <div class="modal-body">
+                 
+                  <div class="form-group">
+                      <label>Name</label>
+                      <input type="text" formControlName="name" class="form-control" >
+                  </div>    
+
+
+                  <div class="form-group">
+                      <label>Address</label>
+                      <input type="text" formControlName="address" class="form-control" >
+                  </div>
+                                    
+                  
+                
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="savecourseprovider()" [disabled]="courseprovidermodalForm.invalid">Save</button>
+              </div>
+    </form>
+</ng-template>
+
+
+
+<ng-template #officelocationmodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Office Location</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "officelocationmodalForm">
+              <div class="modal-body">
+                 
+                  <div class="form-group">
+                      <label>Office Location</label>
+                      <input type="text" formControlName="location" class="form-control" >
+                  </div>
+                                       
+                  
+                
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="saveofficelocation()" [disabled]="officelocationmodalForm.invalid">Save</button>
+              </div>
+    </form>
+</ng-template>
+
+
+<ng-template #rankmodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Perdiem</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "rankmodalForm">
+              <div class="modal-body">
+                 
+                  <div class="form-group">
+                      <label>Rank</label>
+                      <select class="form-control" #name formControlName="name" *ngIf="dbranklist.length > 0" >
+                          <option *ngFor="let d of dbranklist" value="{{d.name}}" >{{d.name}}</option>
+                       </select>
+                  </div>
+                  
+                   <div class="form-group">
+                      <label>Per Diem (USD)</label>
+                      <input type="text" formControlName="perdiem" class="form-control" >
+                  </div>      
+
+
+                  <div class="form-group">
+                      <label>Region</label>
+                       <select class="form-control" #region formControlName="region" *ngIf="regionlist.length > 0" >
+                          <option *ngFor="let d of regionlist" value="{{d.region}}" >{{d.region}}</option>
+                       </select>
+                  </div>
+                  
+
+                
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="saverank()" [disabled]="rankmodalForm.invalid">Save</button>
+              </div>
+    </form>
+</ng-template>
+
+
+
+<ng-template #unitmodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Unit</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "unitmodalForm">
+              <div class="modal-body">
+                 
+                  <div class="form-group">
+                      <label>Unit</label>
+                      <input type="text" formControlName="name" class="form-control" >
+                  </div>
+                                       
+                  
+                
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="saveunit()" [disabled]="unitmodalForm.invalid">Save</button>
+              </div>
+    </form>
+</ng-template>
+
+
+
+<ng-template #departmentmodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Department</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "departmentmodalForm">
+              <div class="modal-body">
+                 
+                  <div class="form-group">
+                      <label>Department</label>
+                      <input type="text" formControlName="name" class="form-control" >
+                  </div>
+                                       
+                  
+                
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="savedepartment()" [disabled]="departmentmodalForm.invalid">Save</button>
+              </div>
+    </form>
+</ng-template>
+
+
+  <ng-template #updateexchangemodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Exchange Rate</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "updateexchangemodalForm">
+              <div class="modal-body">
+                 
+                  <div class="form-group">
+                    <label>Currency</label>
+                    <input type="text" formControlName="currency" class="form-control" disabled="true">
+                  </div>
+                                       
+                  <div class="form-group">
+                      <label>Date</label>
+                      <input type="date" formControlName="date" class="form-control" >
+                  </div>
+
+                  <div class="form-group">
+                      <label>Rate</label>
+                      <input type="rate" formControlName="rate" class="form-control" >
+                  </div>
+                
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="updateexchange()" [disabled]="updateexchangemodalForm.invalid">Update</button>
+              </div>
+    </form>
+</ng-template>
+
+
+
+  
+  <ng-template #exchangemodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Exchange Rate</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "exchangemodalForm">
+              <div class="modal-body">
+                 
+                  <div class="form-group">
+                    <label>Currency</label>
+                     <select class="form-control" #currency  formControlName="currency" *ngIf="currencylist.length > 0">
+                      <option *ngFor="let d of currencylist" value="{{d.name}}" >{{d.name}}</option>
+                    </select>
+                  </div>
+                                       
+                  <div class="form-group">
+                      <label>Date</label>
+                      <input type="date" formControlName="date" class="form-control" >
+                  </div>
+
+                  <div class="form-group">
+                      <label>Rate</label>
+                      <input type="rate" formControlName="rate" class="form-control" >
+                  </div>
+                
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="saveexchange()" [disabled]="exchangemodalForm.invalid">Save</button>
+              </div>
+    </form>
+</ng-template>
+
+  <ng-template #currencymodal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Currency</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]= "currencymodalForm">
+              <div class="modal-body">
+                 
+                  <div class="form-group">
+                      <label>Currency</label>
+                      <input type="text" formControlName="name" class="form-control" >
+                  </div>
+                                       
+                  
+                
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="savecurrency()" [disabled]="currencymodalForm.invalid">Save</button>
+              </div>
+    </form>
+</ng-template>

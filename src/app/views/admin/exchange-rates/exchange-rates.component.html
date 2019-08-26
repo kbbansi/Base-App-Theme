@@ -1,0 +1,123 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg col-lg-12">
+      <tabset>
+        <tab heading="Exchange Rates">
+          <div class="row">
+            <div class="col-lg col-lg-12">
+              <div class="card">
+                <div class="card-header">Rates</div>
+                <div class="card-block">
+                  <p>
+                    <button class="btn btn-outline-primary block" (click)="openAddRateModal(exchangeRates)">Add A Rate</button>
+                  </p>
+                  <table class="table table-outline">
+                    <thead>
+                    <tr>
+                      <th width="2%"></th>
+                      <th width="20%">No.</th>
+                      <th width="20%">Currency</th>
+                      <th width="20%">Rate</th>
+                      <th width="20%">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="exchangeRateList.length > 0">
+                    <tr *ngFor="let e of exchangeRateList">
+                      <td>
+                        <div class="btn-group" dropdown>
+                          <span class="caret dropdown-toggle" dropdownToggle></span>
+                          <ul *dropdownMenu class="dropdown-menu" role="menu">
+                            <li role="menuitem">
+                              <a class="dropdown-item" (click)="openUpdateExchangeRateModal(e, updateExchangeRate)">Update</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td>{{ e.id }}</td>
+                      <td>{{ e.currency }}</td>
+                      <td>{{ e.rate }}</td>
+                      <td>{{ e.date }}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </tab>
+        <tab heading="Currency"></tab>
+      </tabset>
+    </div>
+  </div>
+</div>
+
+<ng-template #exchangeRates>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Add Exchange Rate</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]="exchangeRateFormModal">
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" formControlName="currency" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Rate</label>
+        <input type="text" formControlName="rate" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" formControlName="date" class="form-control">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="addExchangeRate()">Save</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #updateExchangeRate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Update Exchange Rate</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]="updateExchangeRateFormModal">
+    <div class="modal-body">
+      <div class="form-group">
+        <label>ID</label>
+        <input type="text" formControlName="id" class="form-control" readonly disabled="true">
+      </div>
+
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" formControlName="currency" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Rate</label>
+        <input type="text" formControlName="rate" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" formControlName="date" class="form-control">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="addExchangeRate()">Save</button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #currency>
+
+</ng-template>

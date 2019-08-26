@@ -1,0 +1,62 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">User List : {{userList.length}}</div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th item-width="60%">User</th>
+                    <th item-width="40%">Designation</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="userList.length > 0">
+                  <tr *ngFor="let d of userList">
+                    <td>{{d.firstName}}</td>
+                    <td>{{changeType(d.usertype) | uppercase}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">User Details</div>
+          <div class="card-body">
+              <form [formGroup]="userDetails">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" class="form-control" formControlName="firstName">
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" class="form-control" formControlName="lastName">
+                </div>
+                <div class="form-group">
+                  <label>Other Names</label>
+                  <input type="text" class="form-control" formControlName="otherNames">
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="text" class="form-control" formControlName="email">
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="text" class="form-control" formControlName="password">
+                </div>
+                <div class="form-group">
+                  <label>User Type</label>
+                    <select class="form-control" formControlName="usertype" *ngIf="userTypes.length > 0">
+                      <option *ngFor="let d of userTypes" [value]="d.usertype">{{d.usertype}}</option>
+                    </select>
+                </div>
+               <button class="btn btn-primary block" (click)="saveForm()" [disabled]="userDetails.invalid">Save</button>
+              </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+</div>

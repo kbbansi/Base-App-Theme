@@ -1,0 +1,37 @@
+<div class="animate FadeIn">
+  <div class="row">
+    <div class="col-lg col-lg-12">
+        
+        <tabset>
+        		<tab heading="Stock Balance">
+                         <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  
+                                 
+                                  <th width="12%">Item</th>
+                                  <th width="12%">Balance (GHS)</th>
+                                 
+                                 
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="itemlist.length > 0">
+                            
+
+                                <tr *ngFor="let d of itemlist ">
+                                 
+                                 
+                                  <td>{{d.item}}</td>
+                                  <td>{{d.balance}}</td>
+                                 
+                                </tr>
+                              </tbody>
+                      </table>
+                     </tab>
+          </tabset>
+         
+    </div>
+  </div>
+</div>
+
+ 

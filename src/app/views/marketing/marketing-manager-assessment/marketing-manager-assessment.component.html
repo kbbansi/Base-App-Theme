@@ -1,0 +1,227 @@
+<div class="animated FadeIn">
+    <div class="row">
+      <div class="col-12 col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header">Assessment Status</div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th width="5%"></th>
+                    <th width="20%">Date</th>
+                    <th width="40%">Name</th>
+                    <th width="15%">Type</th>
+                    <th width="20%">Status</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="assessmentList?.length > 0">
+                  <tr *ngFor="let d of assessmentList">
+                    <td><div class="btn-group" dropdown>
+                        <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                             <ul *dropdownMenu class="dropdown-menu" role="menu">
+                               <li role="menuitem" (click)="viewAssessment(d, templateView)"><a class="dropdown-item">View</a></li>
+                               <li role="menuitem" *ngIf="d.status==='Unapproved'" (click)="approveAssessment(d)"  ><a class="dropdown-item" >Approve </a></li>
+                               <li role="menuitem" *ngIf="d.status==='Approved'" (click)="acceptAssessment(d, acceptedTemplate)"  ><a class="dropdown-item" >Accepted </a></li>
+
+                              </ul>
+                           </div></td>
+                    <td>{{d.date}}</td>
+                    <td>{{d.name}}</td>
+                    <td>{{d.type}}</td>
+                    <td>{{d.status}}</td>
+                  </tr>
+                </tbody>
+                <p *ngIf="assessmentList?.length === 0">No Prospects</p>
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Template -->
+  <ng-template #templateView>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Assessment Request</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+        <div class="modal-body">
+            <tabset>
+              <tab heading="Services">
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>Services</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="assessmentAnalysis.services.length > 0">
+                    <tr *ngFor="let d of assessmentAnalysis.services">
+                      <td>{{d.name}}</td>
+                    </tr>
+                  </tbody>
+                  </table>
+              </tab>
+              <tab heading="Details">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th width="35%">Scope</th>
+                        <th width="30%">Item</th>
+                        <th width="15%">Qty</th>
+                        <th width="15%">Unit({{whatType}})</th>
+                        <th width="15%">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="modalDetails.length > 0">
+                      <tr *ngFor="let d of modalDetails">
+                        <td>{{d.scope}}</td>
+                        <td>{{d.item}}</td>
+                        <td>{{d.quantity}}</td>
+                        <td *ngIf="whatType==='Monthly'">{{d.monthly | number}}</td>
+                        <td *ngIf="whatType==='One-time'">{{d.one_time | number}}</td>
+
+                        <td *ngIf="whatType==='Monthly'">{{d.monthly_total | number}}</td>
+                        <td *ngIf="whatType==='One-time'">{{d.one_time_total | number}}</td>
+
+
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td><b>{{getTotal(modalDetails) | number}}</b></td>
+                        </tr>
+                    </tfoot>
+                  </table>
+              </tab>
+              <tab heading="Staff">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th width="50%">Name</th>
+                      <th width="30%">Role</th>
+                      <th width="20%">Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="projectStaff.length > 0">
+                    <tr *ngFor="let d of projectStaff">
+                      <td>{{d.firstname}} {{d.lastname}}</td>
+                      <td>{{d.name}}</td>
+                      <td>{{d.amount}}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <td><b>Total</b></td>
+                    <td></td>
+                    <td><b><span>{{getStaffTotal() | number }}</span></b></td>
+                  </tfoot>
+                </table>
+              </tab>
+              <tab heading="Others">
+                  <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th width="45%">Item</th>
+                          <th width="15%">Quantity</th>
+                          <th width="20%">Unit ({{whatType}})</th>
+
+                          <th width="20%">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="modalOthers.length > 0">
+                        <tr *ngFor="let d of modalOthers">
+                          <td>{{d.item}}</td>
+                          <td>{{d.quantity}}</td>
+                          <!-- <td>{{d.price}}</td> -->
+                          <td *ngIf="whatType==='Monthly'">{{d.monthly | number}}</td>
+                        <td *ngIf="whatType==='One-time'">{{d.one_time | number}}</td>
+
+                        <td *ngIf="whatType==='Monthly'">{{d.monthly_total | number}}</td>
+                        <td *ngIf="whatType==='One-time'">{{d.one_time_total | number}}</td>
+                          <!-- <td>{{d.amount}}</td> -->
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><b>{{getTotal(modalOthers) | number}}</b></td>
+                          </tr>
+                      </tfoot>
+                  </table>
+                </tab>
+                <tab heading="Total">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th width="75%">Description</th>
+                        <th width="25%">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Logistics</td>
+                        <td>{{detailsTotal | number}}</td>
+                      </tr>
+                      <tr>
+                          <td>Other Logistics</td>
+                          <td>{{othersTotal | number}}</td>
+                        </tr>
+                        <tr>
+                            <td>Staff Total</td>
+                            <td>{{grandStaffTotal | number}}</td>
+                          </tr>
+                    </tbody>
+                    <tfoot>
+                      <td><b>Grand Total</b></td>
+                      <td><b>{{othersTotal + detailsTotal + grandStaffTotal | number}}</b></td>
+                    </tfoot>
+                  </table>
+                  </tab>
+            </tabset>
+          </div>
+    </ng-template>
+
+
+    <ng-template #acceptedTemplate>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Contract Finalization</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form [formGroup]="acceptedForm">
+          <div class="modal-body">
+
+            <div class="form-group">
+                <label>Prospect</label>
+                <input type="text" class="form-control" formControlName="prospect" [readOnly]=true>
+            </div>
+            <div class="form-group">
+              <label>Project Code</label>
+              <input type="text" class="form-control" formControlName="project_id">
+            </div>
+
+            <div class="form-group">
+              <label>File</label>
+              <input type="file" class="form-control" #fileInput id="avatar"  formControlName="avatar" (change)="onFileChange($event)">
+            </div>
+            <!-- <div class="form-group" [ngStyle]="{'z-index':'9999'}">
+              <label>Date</label>
+              <input type="text" class="form-control" bsDatepicker>
+            </div> -->
+          </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" (click)="saveContract()" [disabled]="acceptedForm.invalid || loading ">Save <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
+            </div>
+
+        </form>
+    </ng-template>

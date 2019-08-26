@@ -1,0 +1,235 @@
+<div class="animate FadeIn">
+  <div class="row">
+      <div class="col-3 col-lg-3">
+          <div class="card">
+            <div class="card-body p-3 clearfix">
+              <i class="fa fa-cogs bg-primary p-3 font-2xl mr-3 float-left"></i>
+              <div class="h5 text-primary mb-0 mt-2">{{officerDash.myprospect?.total}}</div>
+              <div class="text-muted text-uppercase font-weight-bold font-xs">My Prospects</div>
+            </div>
+          </div>
+
+          <div class="card">
+              <div class="card-body p-3 clearfix">
+                <i class="fa fa-cogs bg-primary p-3 font-2xl mr-3 float-left"></i>
+                <div class="h5 text-primary mb-0 mt-2">{{officerDash.prospect?.total}}</div>
+                <div class="text-muted text-uppercase font-weight-bold font-xs">Prospects</div>
+              </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body p-3 clearfix">
+                  <i class="fa fa-cogs bg-primary p-3 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-primary mb-0 mt-2">{{officerDash.myclose?.total}}</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">My Closed</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body p-3 clearfix">
+                  <i class="fa fa-cogs bg-primary p-3 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-primary mb-0 mt-2">{{officerDash.close?.total}}</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">Closed</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-9">
+          <tabset>
+            <tab heading="My Prospects">
+
+             <div class="row">
+              <div class="col-8 col-md-8">
+                  <p> <button class="btn btn-success" (click)="openModal(template)"><i class="fa fa-plus"></i> New Prospect</button></p>
+                  <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th width="5%"></th>
+                          <th width="45%">Name</th>
+                          <th width="20%">Mobile</th>
+                          <th width="20%">Last Contact</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="myprospectList.length > 0">
+                        <tr *ngFor="let d of myprospectList">
+                          <td>
+                              <div class="btn-group" dropdown>
+                             <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                                  <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                    <li role="menuitem"><a class="dropdown-item" (click)="viewProspectDetails(d.id, template)" >View</a></li>
+                                    <li role="menuitem"><a class="dropdown-item" (click)="editProspectDetails(d.id, template)" >Edit</a></li>
+                                    <li class="divider dropdown-divider"></li>
+                                    <li role="menuitem"><a class="dropdown-item" (click)="viewProspect(d)">Activity</a></li>
+                                    <li role="menuitem"><a class="dropdown-item" (click)="viewHistory(d, prospecthistory)">History</a></li>
+                                    <li class="divider dropdown-divider"></li>
+                                    <li role="menuitem"><a class="dropdown-item" (click)="openAssessmentRequest(assessmentRequest, d)" >Request Assessment</a></li>
+                                  </ul>
+                                </div>
+                          </td>
+                          <td>{{d.name}}</td>
+                          <td>{{d.contact_mobile}}</td>
+                          <td>{{d.last_contact}}
+
+
+                          </td>
+                        </tr>
+                      </tbody>
+                      <p *ngIf="myprospectList.length === 0">No entries</p>
+                  </table>
+              </div>
+
+              <div class="col-4 col-md-4">
+                  <div class="card">
+                    <div class="card-header">Prospect Activity</div>
+                    <div class="card-body">
+                        <form [formGroup]="prospectUpdate">
+                            <div class="form-group">
+                              <label>Prospect</label>
+                              <input type="text" class="form-control" formControlName="name" readonly>
+                              <input type="hidden" formControlName="prospect_id">
+                            </div>
+                            <div class="form-group">
+                              <label for="name">Activity </label>
+                                <select class="form-control" formControlName="activity">
+                                  <option>Phone Call</option>
+                                  <option>Email</option>
+                                  <option>Visit</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                              <label>Note</label>
+                              <textarea class="form-control" rows="5" formControlName="notes"></textarea>
+                            </div>
+                           <button class="btn btn-primary block" [disabled]="prospectUpdate.invalid"  (click)="saveActivity()">Update</button>
+                          </form>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            </tab>
+            <tab heading="Prospects">
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th width="40%">Name</th>
+                        <th width="20%">Mobile</th>
+                        <th width="20%">Last Contact</th>
+                        <th width="20">Staff</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="prospectList.length > 0">
+                      <tr *ngFor="let d of prospectList">
+                        <td>{{d.name}}</td>
+                        <td>{{d.contact_mobile}}</td>
+                        <td>{{d.last_contact}}</td>
+                        <td>{{d.salesperson}}</td>
+                      </tr>
+                    </tbody>
+                    <p *ngIf="prospectList.length === 0">No entries</p>
+                </table>
+            </tab>
+          </tabset>
+        </div>
+  </div>
+  </div>
+
+   <!-- Template Section -->
+
+   <!-- Prospect template -->
+   <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">New Prospect</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="prospectDetails">
+        <div class="modal-body">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" formControlName="name">
+              </div>
+              <div class="form-group">
+                  <label>Contact Person</label>
+                  <input type="text" class="form-control" formControlName="contact_person">
+              </div>
+              <div class="form-group">
+                  <label>Contact Email</label>
+                  <input type="text" class="form-control" formControlName="contact_email" >
+              </div>
+              <div class="form-group">
+                  <label>Mobile</label>
+                  <input type="text" class="form-control" formControlName="contact_mobile">
+              </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary block" [disabled]="prospectDetails.invalid"  (click)="saveProspect()" *ngIf="editable==='Save'">Save</button>
+            <button class="btn btn-primary block" [disabled]="prospectDetails.invalid"  (click)="updateProspect()" *ngIf="editable==='Update'">Update</button>
+          </div>
+    </form>
+    </ng-template>
+   <!-- End of Prospect  -->
+
+
+   <!-- Prospect History -->
+   <ng-template #prospecthistory>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Prospect Acitity History</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th width="20%">Date</th>
+                <th width="30%">Activity</th>
+                <th width="50%">Notes</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="historyList.length > 0 ">
+              <tr *ngFor="let d of historyList">
+                <td>{{d.date}}</td>
+                <td>{{d.activity}}</td>
+                <td>{{d.notes}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      </ng-template>
+
+
+   <!-- End of Prospect History -->
+
+
+    <!-- Prospect template -->
+    <ng-template #assessmentRequest>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Assessment Request</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+          <div class="modal-body">
+              <form [formGroup]="assessmentDetails">
+                <div class="form-group">
+                  <label>Prospect</label>
+                  <input type="text" class="form-control" formControlName="prospect">
+                </div>
+                <div class="form-group">
+                    <label>Job Type</label>
+                    <select class="form-control" formControlName="type">
+                      <option [value]="'Monthly'">Monthly</option>
+                      <option [value]="'One-time'">One-time</option>
+                    </select>
+                  </div>
+                <button class="btn btn-primary block" [disabled]="assessmentDetails.invalid"  (click)="saveRequest()">Save</button>
+              </form>
+          </div>
+      </ng-template>
+     <!-- End of Prospect  -->
+
+
+   <!-- End of Template Section -->

@@ -1,0 +1,370 @@
+<div class="animate FadeIn">
+  <div class="row">
+    <div class="col-6 col-lg-6 col-md-6">
+       <tabset>
+         <tab heading="Pricing">
+            <!-- <div class="card">
+                <div class="card-header">Logistics List</div> -->
+                <!-- <div class="card-body"> -->
+                <p><input type="text" class="form-control" placeholder="Search"></p>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th width="2%"></th>
+                        <th width="38%">Item</th>
+                        <th width="20%">Price</th>
+                        <th width="20%">One-time</th>
+                        <th width="20%">Montly</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="itemPriceList.length > 0">
+                      <tr *ngFor="let d of itemPriceList">
+                        <td>
+                            <div class="btn-group" dropdown>
+                                <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                                     <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                       <li role="menuitem"><a class="dropdown-item" (click)="updatePrice(d, templatePrice)" >Update Price</a></li>
+                                       <li role="menuitem"><a class="dropdown-item" (click)=" viewHistory(d.id, templateHistory)" >History</a></li>
+                                     </ul>
+                                   </div>
+                        </td>
+                        <td>{{d.item}}</td>
+                        <td>{{d.price}}</td>
+                        <td>{{d.onetime_price}}</td>
+                        <td>{{d.monthly_price}}</td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                <!-- </div> -->
+              <!-- </div> -->
+         </tab>
+         <tab heading="Disbursement">
+            <p><input type="text" class="form-control" placeholder="Search"></p>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th width="2%"></th>
+                  <th width="68%">Item</th>
+                  <th width="20%">Balance</th>
+                  <!-- <th width="20%">Debit</th> -->
+
+                </tr>
+              </thead>
+              <tbody *ngIf="disbursementList.length > 0">
+                <tr *ngFor="let d of disbursementList">
+                  <td>
+                      <div class="btn-group" dropdown>
+                          <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                               <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                 <li role="menuitem"><a class="dropdown-item" (click)="transaction(d, templateDebit)" >Transaction</a></li>
+                                 <!-- <li role="menuitem"><a class="dropdown-item" (click)=" credit(d.id, 'credit' templateCredit)">Add</a></li> -->
+                               </ul>
+                             </div>
+
+                  </td>
+                  <td>{{d.item}}</td>
+                  <td>{{d.balance}}</td>
+                  <!-- <td>{{d.price}}</td> -->
+                </tr>
+              </tbody>
+            </table>
+         </tab>
+       </tabset>
+    </div>
+    <div class="col-6 col-lg-6 col-md-6">
+
+        <tabset>
+            <tab heading="Items">
+              <p><button class="btn btn-primary" (click)="openItems(itemTemplate)">New Item</button></p>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>Item</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="itemsList.length > 0">
+                  <tr *ngFor="let d of itemsList">
+                    <td width="30%">{{d.category}}</td>
+                    <td width="30%">{{d.item}}</td>
+                    <td width="40%">{{d.description}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </tab>
+            <tab heading="Categories">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th width="40%">Category</th>
+                    <th width="60%">Description</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="categoryList.length > 0">
+                  <tr *ngFor="let d of categoryList">
+                    <td>{{d.category}}</td>
+                    <td>{{d.description}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </tab>
+            <tab heading="Team">
+              <p><button class="btn btn-primary" (click)="openTeam(teamTemplate)">New Cost</button></p>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th width="40%">Service</th>
+                    <th width="40%">Role</th>
+                    <th width="20%">Amount</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="teamCostList.length > 0">
+                  <tr *ngFor="let d of teamCostList">
+                    <td>{{d.name}}</td>
+                    <td>{{d.team_role}}</td>
+                    <td>{{d.amount}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </tab>
+          </tabset>
+
+
+
+
+<!--
+      <div class="card">
+        <div class="card-header">Vendor Setup</div>
+        <div class="card-body">
+          <p><button class="btn btn-primary" (click)="openVendor(templateVendor)">New Vendor</button></p>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th width="2%"></th>
+                <th width="58%">Name</th>
+                <th width="20%">Contact</th>
+                <th width="20%">Items</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="vendorList.length > 0">
+              <tr *ngFor="let d of vendorList">
+                <td>
+                    <div class="btn-group" dropdown>
+                        <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                             <ul *dropdownMenu class="dropdown-menu" role="menu">
+                               <li role="menuitem"><a class="dropdown-item" (click)="addItem(d.id, templateItem)" >Add Item</a></li>
+                               <li role="menuitem"><a class="dropdown-item" (click)=" viewDetails(d, templateVendor)" >View</a></li>
+
+                             </ul>
+                           </div>
+
+                </td>
+                <td>{{d.name}}</td>
+                <td>{{d.phone}}</td>
+                <td>{{d.total}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- Template -->
+<ng-template #teamTemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Role Costing</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form [formGroup]="teamForm">
+      <div class="modal-body">
+            <div class="form-group">
+              <label>Service</label>
+              <select class="form-control" formControlName="service" *ngIf="serviceList.length > 0">
+                <option *ngFor="let d of serviceList" [value]="d.id">{{d.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <select class="form-control" formControlName="role">
+                  <option *ngFor="let d of roleList" [value]="d.id">{{d.name}}</option>
+                  </select>
+            </div>
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="text" class="form-control" formControlName="amount">
+            </div>
+      </div>
+      <div class="modal-footer" *ngIf="view">
+          <button class="btn btn-primary block" [disabled]="teamForm.invalid"  (click)="teamCostSave()">Save</button>
+        </div>
+  </form>
+  </ng-template>
+
+
+  <ng-template #templateItem>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Vendor Items</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="itemDetails">
+
+        <div class="modal-body">
+            <!-- <input type="tex" class="form-control" placeholder="Search"> -->
+              <div class="form-group">
+                <label>Item</label>
+                <input type="text" class="form-control" formControlName="category">
+
+              </div>
+              <!-- <div class="form-group">
+                  <label>Selected Item</label>
+                  <input type="text" class="form-control" formControlName="item">
+              </div> -->
+
+            <button class="btn btn-primary block" [disabled]="itemDetails.invalid"  (click)="saveItem()">Assign</button>
+
+        </div>
+        <div class="modal-footer">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Item</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </form>
+    </ng-template>
+
+
+    <ng-template #templatePrice>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Item Pricing</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form [formGroup]="priceDetails">
+          <div class="modal-body">
+                <div class="form-group">
+                  <label>Item</label>
+                  <input type="text" class="form-control" formControlName="item">
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="text" class="form-control" formControlName="price">
+                </div>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-primary block" [disabled]="priceDetails.invalid"  (click)="savePrice()">Save</button>
+            </div>
+      </form>
+      </ng-template>
+
+      <ng-template #templateHistory>
+          <div class="modal-header">
+            <h4 class="modal-title pull-left">Vendor Details</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th width="30%">Date</th>
+                      <th width="70%">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="itemHistoryList.length > 0">
+                    <tr *ngFor="let d of itemHistoryList">
+                      <td>{{d.date}}</td>
+                      <td>{{d.price}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </ng-template>
+        <!-- templateDebit
+        templateCredit -->
+
+        <ng-template #templateDebit>
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">Vendor Details</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              <form [formGroup]="transactionForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label>Type</label>
+                      <select class="form-control" formControlName="type">
+                        <option [value]="'Credit'">Credit</option>
+                        <option [value]="'Debit'">Debit</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Unit</label>
+                      <select class="form-control" formControlName="unit" *ngIf="serviceList.length > 0">
+                        <option *ngFor="let d of serviceList" [value]="d.id">{{d.name}}</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Quantity</label>
+                      <input type="text" class="form-control" formControlName="quantity">
+                    </div>
+                    <div class="form-group">
+                      <label>Note</label>
+                      <textarea class="form-control" formControlName="note"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" (click)="saveTransaction()" [disabled]="transactionForm.invalid">Save</button>
+                </div>
+            </form>
+          </ng-template>
+
+<!-- Items template -->
+<ng-template #itemTemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Services</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form [formGroup]="itemForm">
+      <div class="modal-body">
+          <div class="form-group">
+              <label>Category</label>
+              <select class="form-control" formControlName="type" *ngIf="categoryList.length > 0">
+                <option *ngFor="let d of categoryList" [value]="d.id">{{d.category}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Item</label>
+              <input type="text" class="form-control" formControlName="item">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" formControlName="description"></textarea>
+              </div>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-primary block" [disabled]="itemForm.invalid"  (click)="saveItem()">Save</button>
+        </div>
+  </form>
+  </ng-template>

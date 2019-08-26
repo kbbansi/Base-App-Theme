@@ -1,0 +1,280 @@
+<div class="animate fadeIn">
+  <div class="row">
+  <div class="col-6 col-lg-6">
+    <div class="card">
+      <div class="card-header">List</div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th width="2%"></th>
+              <th width="70%">Name</th>
+              <th width="30%">Type</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="projectList.length > 0">
+            <tr *ngFor="let d of projectList">
+              <td>
+                  <div class="btn-group" dropdown>
+                      <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                           <ul *dropdownMenu class="dropdown-menu" role="menu">
+                             <li role="menuitem"><a class="dropdown-item" (click)="incident(d, templateIncident)" >Incidents & Accidents</a></li>
+                             <li role="menuitem"><a class="dropdown-item" (click)="request(d, templateRequest)" >Requests</a></li>
+                             <li role="menuitem"><a class="dropdown-item" (click)="staff(d, templateStaff)" >Staff Management</a></li>
+                             <li role="menuitem"><a class="dropdown-item" (click)="others(d, templateOthers)" >Others</a></li>
+
+                           </ul>
+                         </div>
+              </td>
+              <td>{{d.name}}</td>
+              <td>{{d.type}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-6">
+      <div class="card">
+        <div class="card-header">Project Details</div>
+        <div class="card-body">
+          <div class="form-group">
+              <input type="text" class="form-control" [readOnly]=true>
+                  <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+
+          </div>
+          <div class="form-group">
+              <div class="progress progress-white progress-xs my-3">
+                  <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+          </div>
+
+          <div class="h4 m-0">68.9%</div>
+          <div>Budget</div>
+          <div class="progress progress-xs my-3">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <small class="text-muted"></small>
+
+          <div class="h4 m-0">0%</div>
+          <div>Incidents & Accidents</div>
+          <div class="progress progress-xs my-3">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <small class="text-muted"></small>
+
+          <div class="h4 m-0">4</div>
+          <div>Staff</div>
+          <!-- <div class="progress progress-xs my-3">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div> -->
+          <small class="text-muted"></small>
+
+
+        </div>
+      </div>
+    </div>
+  </div> <!-- end of row -->
+</div>
+
+<!-- Templates -->
+
+
+<ng-template #templateIncident>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Details</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+      <form [formGroup]="incidentForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Type</label>
+          <select class="form-control" formControlName="type">
+              <option>Incident</option>
+              <option>Near Miss</option>
+              <option>Accident</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <select class="form-control" formControlName="category">
+                <option>Fire</option>
+                <option>Chemical</option>
+                <option>Mechanical</option>
+            </select>
+          </div>
+
+        <div class="form-group">
+            <label>Staff Involved</label>
+            <select class="form-control" formControlName="staff" *ngIf="projectStaffList.length > 0" >
+                <option *ngFor="let d of projectStaffList" [value]="d.staff_id"> {{d.firstname}} {{d.lastname}}</option>
+            </select>
+          </div>
+        <div class="form-group">
+            <label>Notes</label>
+            <textarea class="form-control" formControlName="note" rows="5"></textarea>
+        </div>
+
+        </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" [disabled] (click)="saveIncident()">Save</button>
+      </div>
+      </form>
+</ng-template>
+<ng-template #templateRequest>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Requistion</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+      <form [formGroup]="requestForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Item</label>
+          <select class="form-control" formControlName="item" *ngIf="itemList.length > 0">
+            <option *ngFor="let d of itemList" [value]="d.logistics">{{d.item}}</option>
+          </select>
+        </div>
+        <div class="form-grou">
+          <label>Quantity</label>
+          <input type="text" class="form-control" formControlName="quantity">
+        </div>
+        </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" [disabled]="requestForm.invalid" (click)="saveRequest()">Save</button>
+      </div>
+      </form>
+</ng-template>
+<ng-template #templateStaff>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Staff Management</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <tabset>
+
+          <tab heading="Transfers">
+              <form [formGroup]="transferForm">
+                  <div class="form-group">
+                    <label>Staff</label>
+                    <select class="form-control" formControlName="staff" *ngIf="projectStaffList.length > 0">
+                      <option *ngFor="let d of projectStaffList" [value]="d.staff_id">{{d.firstname}} {{d.lastname}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Project</label>
+                    <select class="form-control" formControlName="project">
+                      <option *ngFor="let d of projectList" [value]="d.id">{{d.name}}</option>
+                    </select>
+                  </div>
+                  <button class="btn btn-primary" (click)="saveTransfer()" [disabled]="transferForm.invalid">Transfer</button>
+                </form>
+          </tab>
+          <tab heading="Disciplinary">
+              <!-- <form [formGroup]="disciplinaryForm">
+                  <div class="form-group">
+                    <label>Staff</label>
+                    <select class="form-control"  *ngIf="projectStaffList.length > 0">
+                        <option *ngFor="let d of projectStaffList" [value]="d.staff_id">{{d.firstname}} {{d.lastname}}</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Notes</label>
+                    <textarea class="form-control" rows="5">
+                  </div>
+                  <button class="btn btn-primary" [disbabled]="disciplinaryForm.invalid" (click)="saveTransfer()">Transfer</button>
+                </form> -->
+
+          </tab>
+          <tab heading="Replacement">
+
+          </tab>
+        </tabset>
+
+      </div>
+</ng-template>
+<!-- <ng-template #templateStaff>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Staff Management</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+      <div class="modal-body">
+          <tabset>
+            <tab heading="Transfers">
+              <form [formGroup]="transferForm">
+                <div class="form-group">
+                  <label>Staff</label>
+                  <select class="form-control" formControlName="staff" *ngIf="projectStaffList.length > 0">
+                    <option *ngFor="let d of projectStaffList" [value]="d.staff_id">{{firstname}} {{lastname}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Project</label>
+                  <select class="form-control" formControlName="project">
+                    <option *ngFor="let d of projectList" [value]="d.id">{{d.name}}</option>
+                  </select>
+                </div>
+                <button class="btn btn-primary" (click)="saveTransfer()" [disabled]="transferForm.invalid">Transfer</button>
+              </form>
+
+            </tab>
+            <tab heading="Disciplinary">
+                <form [formGroup]="disciplinaryForm">
+                    <div class="form-group">
+                      <label>Staff</label>
+                      <select class="form-control" formControlName="staff" *ngIf="projectStaffList.length > 0">
+                          <option *ngFor="let d of projectStaffList" [value]="d.staff_id">{{firstname}} {{lastname}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Notes</label>
+                      <textarea class="form-control" formControlName="note" rows="5">
+                    </div>
+                    <button class="btn btn-primary" [disbabled]="disciplinaryForm.invalid" (click)="saveTransfer()">Transfer</button>
+                  </form>
+
+            </tab>
+            <tab heading="Replacement">
+                <form [formGroup]="replacementForm">
+                    <div class="form-group">
+                      <label>Project Staff</label>
+                      <select class="form-control" formControlName="staff" *ngIf="projectStaffList.length > 0">
+                          <option *ngFor="let d of projectStaffList" [value]="d.staff_id">{{firstname}} {{lastname}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Other Staff</label>
+                        <select class="form-control" formControlName="staff" *ngIf="staffList.length > 0">
+                            <option *ngFor="let d of staffList" [value]="d.id">{{firstname}} {{lastname}}</option>
+                          </select>
+                      </div>
+
+                    <div class="form-group">
+                      <label>Notes</label>
+                      <textarea class="form-control" formControlName="note" rows="5">
+                    </div>
+                    <button class="btn btn-primary" [disbabled]="replacementForm.invalid" (click)="saveTransfer()">Transfer</button>
+                  </form>
+            </tab>
+
+          </tabset>
+        </div>
+</ng-template> -->
+<ng-template #templateOthers>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Others</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+      <div class="modal-body">
+        </div>
+</ng-template>

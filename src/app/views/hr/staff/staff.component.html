@@ -1,0 +1,233 @@
+<div class="animated FadeIn">
+  <div class="row">
+      <div class="col-3 col-lg-3">
+          <div class="card">
+            <div class="card-body p-3 clearfix">
+              <i class="fa fa-users bg-primary p-3 font-2xl mr-3 float-left"></i>
+              <div class="h5 text-primary mb-0 mt-2" *ngIf="dash.staff">{{dash.staff.total}}</div>
+              <div class="h5 text-primary mb-0 mt-2" *ngIf="!dash.staff">0</div>
+              <div class="text-muted text-uppercase font-weight-bold font-xs">Staff</div>
+            </div>
+          </div>
+          <div class="card">
+              <div class="card-body p-3 clearfix">
+                <i class="fa fa-sign-out bg-primary p-3 font-2xl mr-3 float-left"></i>
+                <div class="h5 text-primary mb-0 mt-2" *ngIf="dash.leave">{{dash?.leave.total}}</div>
+                <div class="h5 text-primary mb-0 mt-2" *ngIf="!dash.leave">0</div>
+                <div class="text-muted text-uppercase font-weight-bold font-xs">On Leave</div>
+              </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body p-3 clearfix">
+                  <i class="fa fa-user-times bg-primary p-3 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-primary mb-0 mt-2" *ngIf="dash.suspend">{{dash?.suspend.total}}</div>
+                  <div class="h5 text-primary mb-0 mt-2" *ngIf="!dash.suspend">0</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">Suspension</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body p-3 clearfix">
+                  <i class="fa fa-male bg-primary p-3 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-primary mb-0 mt-2" *ngIf="gender">{{gender.male}}</div>
+                  <div class="h5 text-primary mb-0 mt-2" *ngIf="!gender">0</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">Male</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body p-3 clearfix">
+                  <i class="fa fa-female bg-primary p-3 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-primary mb-0 mt-2" *ngIf="gender">{{gender.female}}</div>
+                  <div class="h5 text-primary mb-0 mt-2" *ngIf="!gender">0</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">Female</div>
+                </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th item-width="80%">Department</th>
+                    <th item-width="20%">Total</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="dash.department?.length > 0">
+                    <tr *ngFor="let d of dash.department">
+                      <td>{{d.department}}</td>
+                      <td>{{d.total}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+      </div>
+      <div class="col-9 col-lg-9">
+        <tabset>
+          <tab heading="Department List">
+            <div class="row">
+            <div class="col-4 col-lg-4">
+                <!-- <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Department</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="departmentList?.length > 0">
+                      <tr *ngFor="let d of departmentList">
+                        <td><a (click)="viewDepartment(d.name)" class="btn btn-primary btn-block">{{d.name}}</a></td>
+                      </tr>
+                    </tbody>
+                  </table> -->
+                  <!-- <ul>
+                    <li *ngFor="let d of departmentList"><a (click)="viewDepartment(d.name)" class="btn btn-primary btn-block">{{d.name}}</a> </li>
+                  </ul> -->
+                  <div *ngIf="departmentList.length > 0">
+                  <button type="button" class="btn btn-secondary btn-block" *ngFor="let d of departmentList" (click)="viewDepartment(d.name)" >{{d.name}}</button>
+                </div>
+            </div>
+            <div class="col-8 col-lg-8">
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th width="55%">Name</th>
+                    <th width="25%">Contact</th>
+                    <th width="20%">ID</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="selectedDepartment.length > 0">
+                  <tr *ngFor="let d of selectedDepartment" >
+                    <td>{{d.firstname}} {{d.lastname}}</td>
+                    <td>{{d.mobile}}</td>
+                    <td>{{d.staff_id}}</td>
+                  </tr>
+                </tbody>
+                <span  *ngIf="selectedDepartment.length  === 0">No Staff Found In Department</span>
+              </table>
+
+            </div>
+          </div>
+          </tab>
+          <tab heading="Services">
+              <div class="row">
+
+                  <div class="col-4 col-lg-4">
+
+                      <div *ngIf="serviceList.length > 0">
+                          <button type="button" class="btn btn-secondary btn-block" *ngFor="let d of serviceList" (click)="viewService(d.name)" >{{d.name}}</button>
+                        </div>
+                      <!-- <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Services</th>
+                            </tr>
+                          </thead>
+                          <tbody *ngIf="serviceList?.length > 0">
+                            <tr *ngFor="let d of serviceList">
+                              <td><a (click)="viewService(d.name)">{{d.name}}</a></td>
+                            </tr>
+                          </tbody>
+                        </table> -->
+
+                  </div>
+                  <div class="col-8 col-lg-8">
+
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th width="55%">Name</th>
+                          <th width="25%">Contact</th>
+                          <th width="20%">ID</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="selectedService.length > 0">
+                        <tr *ngFor="let d of selectedService" >
+                          <td>{{d.firstname}} {{d.lastname}}</td>
+                          <td>{{d.mobile}}</td>
+                          <td>{{d.staff_id}}</td>
+                        </tr>
+                      </tbody>
+                <span  *ngIf="selectedService.length  === 0">No Staff Found with Selected Service</span>
+                    </table>
+
+                  </div>
+                </div>
+          </tab>
+          <tab heading="New">
+
+            <div class="row">
+
+               <div class="col-5">
+                  <form [formGroup]="staffDetails">
+                      <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" formControlName="firstname">
+                      </div>
+                      <div class="form-group">
+                          <label>Last Name</label>
+                          <input type="text" class="form-control" formControlName="lastname">
+                        </div>
+                      <div class="form-group">
+                          <label>Staff ID</label>
+                          <input type="text" class="form-control" formControlName="staff_id">
+                      </div>
+                      <div class="form-group">
+                        <label>Gender</label>
+                        <select class="form-control" formControlName="gender">
+                          <option>Male</option>
+                          <option>Female</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                          <label>Email</label>
+                          <input type="text" class="form-control" formControlName="email">
+                      </div>
+                      <div class="form-group">
+                          <label>Address</label>
+                          <textarea class="form-control" formControlName="address" rows="5"></textarea>
+                        </div>
+                      <div class="form-group">
+                        <label>Mobile</label>
+                        <input type="text" class="form-control" formControlName="mobile">
+                      </div>
+                      <div class="form-group">
+                        <label>Department</label>
+                        <select class="form-control" formControlName="department" *ngIf="departmentList.length > 0">
+                          <option  *ngFor="let d of departmentList" [value]="d?.name">{{d.name}}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                          <label>Service</label>
+                          <select class="form-control" formControlName="service" *ngIf="serviceList.length > 0">
+                            <option *ngFor="let d of serviceList" [value]="d.name">{{d.name}}</option>
+                          </select>
+                        </div>
+                     <button class="btn btn-primary block" [disabled]="staffDetails.invalid" (click)="saveStaff()">Save</button>
+                  </form>
+
+               </div>
+               <div class="col-7">
+                  <input type="text" class="form-control" placeholder="Search"> <br>
+                 <table class="table table-striped">
+                   <thead>
+                     <tr>
+                       <th item-width="70%">Name</th>
+                       <th item-width="30%">Service</th>
+                     </tr>
+                   </thead>
+                   <tbody *ngIf="staffList?.length > 0 ">
+                     <tr *ngFor="let d of staffList">
+                       <td>{{d.firstname}} {{d.lastname}}</td>
+                       <td>{{d.service}}</td>
+                     </tr>
+                   </tbody>
+                 </table>
+               </div>
+
+
+            </div>
+          </tab>
+        </tabset>
+      </div>
+  </div>
+</div>

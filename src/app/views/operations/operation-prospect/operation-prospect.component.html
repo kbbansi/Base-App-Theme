@@ -1,0 +1,30 @@
+<div class="animate FadeIn">
+  <div class="row">
+  <div class="col-12 col-lg-12 col-md-12">
+    <div class="card">
+      <div class="card-header">Prospect List</div>
+      <div class="card-body">
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th width="40%">Name</th>
+                  <th width="20%">Mobile</th>
+                  <th width="20%">Last Contact</th>
+                  <th width="20">Staff</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="prospectList.length > 0">
+                <tr *ngFor="let d of prospectList">
+                  <td>{{d.name}}</td>
+                  <td>{{d.contact_mobile}}</td>
+                  <td>{{d.last_contact}}</td>
+                  <td>{{d.salesperson}}</td>
+                </tr>
+              </tbody>
+              <p *ngIf="prospectList.length === 0">No entries</p>
+          </table>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

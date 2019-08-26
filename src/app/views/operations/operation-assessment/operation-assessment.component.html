@@ -1,0 +1,186 @@
+<div class="animate FadeIn">
+  <div class="row">
+    <div class="col-12 col-lg-12 col-md-12">
+      <tabset>
+        <tab heading="Assessment Listing">
+            <div class="card">
+                <div class="card-header">Assessment List</div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th width="2%"></th>
+                            <th width="18%">Date</th>
+                            <th width="50%">Name</th>
+                            <th width="20%">Services</th>
+                            <!-- <th width="20%">Assigned To</th>
+                            <th width="20%">Assigned Date</th> -->
+                            <th width="10%">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="assessmentList.length > 0">
+                          <tr *ngFor="let d of assessmentList">
+                            <td>
+                              <div class="btn-group" dropdown>
+                                  <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                                       <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                         <li *ngIf="d.status!=='Assigned'" role="menuitem"><a class="dropdown-item" (click)="assignAssessment(d.id, templateAssign)" >Assign</a></li>
+                                         <li role="menuitem"><a class="dropdown-item" (click)=" viewAssessment(d, templateView)" >View</a></li>
+                                         <li role="menuitem"><a class="dropdown-item" (click)=" addStaff(d, templateStaffAdd)" >Add Staff</a></li>
+                                         <li role="menuitem"><a class="dropdown-item" (click)=" others(d, templateView)" >Others</a></li>
+
+                                       </ul>
+                                     </div>
+                            </td>
+                            <td>{{d.date}}</td>
+                            <td>{{d.name}}</td>
+                            <td>{{d.total}}</td>
+                            <!-- <td>{{d.assignTo}}</td>
+                            <td>{{d.assignDate}}</td> -->
+                            <td>{{d.status}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+              </div>
+        </tab>
+        <tab heading="Completed">
+
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>
+
+
+<!-- Template -->
+
+<ng-template #templateAssign>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Assessment Assignment</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form [formGroup]="assignmentForm">
+      <div class="modal-body">
+            <div class="form-group">
+              <label>Staff</label>
+              <select class="form-control" formControlName="assignee" *ngIf="operationStaff.length > 0">
+                <option *ngFor="let d of operationStaff" [value]="d.id">{{d.firstname}} {{d.lastname}}</option>
+              </select>
+            </div>
+            <!-- <div class="form-group">
+                <label>Service</label>
+                <select class="form-control" formControlName="service">
+                  <option *ngFor="let d of serviceList">{{d.name}}</option>
+                </select>
+            </div> -->
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-primary block" [disabled]="assignmentForm.invalid"  (click)="saveAssign()">Save</button>
+        </div>
+  </form>
+  </ng-template>
+
+
+
+<ng-template #templateView>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Assessment Request</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+      <div class="modal-body">
+          <tabset>
+            <tab heading="Services">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th>Services</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="assessmentAnalysis.services.length > 0">
+                  <tr *ngFor="let d of assessmentAnalysis.services">
+                    <td>{{d.name}}</td>
+                  </tr>
+                </tbody>
+                </table>
+            </tab>
+            <tab heading="Details">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th width="20%">Services</th>
+                      <th width="25%">Finding</th>
+                      <th width="25%">Scope</th>
+                      <th width="25%">Items</th>
+                      <th width="15%">Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="assessmentAnalysis.details.length > 0">
+                    <tr *ngFor="let d of assessmentAnalysis.details">
+                      <td>{{d.name}}</td>
+                      <td>{{d.finding}}</td>
+                      <td>{{d.scope}}</td>
+                      <td>{{d.item}}</td>
+                      <td>{{d.quantity}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </tab>
+          </tabset>
+        </div>
+  </ng-template>
+
+
+  <ng-template #templateStaffAdd>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Staff Additions</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+            <form [formGroup]="staffForm">
+                <div class="form-group">
+                    <label>Service</label>
+                    <select class="form-control" formControlName="service" *ngIf="serviceList.length > 0" (change)="selectStaff()">
+                      <option *ngFor="let d of serviceList" [value]="d.id">{{d.name}}</option>
+                    </select>
+                  </div>
+              <div class="form-group" *ngIf="operationServiceStaff.length > 0 ">
+                <label>Staff</label>
+                <select class="form-control" formControlName="staff" >
+                  <option *ngFor="let d of operationServiceStaff" [value]="d.id">{{d.firstname}} {{d.lastname}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                  <label>Role</label>
+                  <input type="text" class="form-control" formControlName="role">
+                </div>
+              <button class="btn btn-primary" (click)="saveStaff()" [disabled]="staffForm.invalid">Save</button>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th width="50%">Service</th>
+                  <th width="50%">Staff</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="staffPerServiceList.length > 0">
+                  <tr *ngFor="let d of staffPerServiceList">
+
+                    <td>{{d.name}}</td>
+                    <td>{{d.firstname}} {{d.lastname}}</td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+    </ng-template>
+

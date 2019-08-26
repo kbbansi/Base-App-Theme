@@ -1,0 +1,154 @@
+<div class="animate FadeIn">
+  <div class="row">
+  <div class="col-6 col-lg-6 ">
+    <div class="row">
+        <div class="col-6 col-lg-6">
+            <div class="card">
+              <div class="card-body p-3 clearfix">
+                <i class="fa fa-cogs bg-primary p-3 font-2xl mr-3 float-left"></i>
+                <div class="h5 text-primary mb-0 mt-2">{{officerDash.prospect?.total}}</div>
+                <div class="text-muted text-uppercase font-weight-bold font-xs">Prospects</div>
+              </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-6">
+            <div class="card">
+              <div class="card-body p-3 clearfix">
+                <i class="fa fa-cogs bg-primary p-3 font-2xl mr-3 float-left"></i>
+                <div class="h5 text-primary mb-0 mt-2">{{officerDash.close?.total}}</div>
+                <div class="text-muted text-uppercase font-weight-bold font-xs">Closed</div>
+              </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-12">
+          <div class="card">
+            <div class="card-header">Officer Engagements</div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th width="60%">Officer</th>
+                    <th width="40%">Total</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="officerList.length > 0">
+                  <tr *ngFor="let d of officerList">
+                    <td>{{d.staff}}</td>
+                    <td>{{d.total}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end of div -->
+
+    <div class="col-6 col-lg-6">
+      <div class="row">
+      <div class="card">
+        <div class="card-header">Prospect List</div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th width="5%"></th>
+                    <th width="45%">Name</th>
+                    <th width="20%">Mobile</th>
+                    <th width="20%">Last Contact</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="prospectList.length > 0">
+                  <tr *ngFor="let d of prospectList">
+                    <td>
+                        <div class="btn-group" dropdown>
+                       <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                              <li role="menuitem"><a class="dropdown-item" (click)="viewProspectDetails(d.id, template)" >View</a></li>
+                              <li role="menuitem"><a class="dropdown-item" (click)="viewHistory(d, prospecthistory)">History</a></li>
+                            </ul>
+                          </div>
+                    </td>
+                    <td>{{d.name}}</td>
+                    <td>{{d.contact_mobile}}</td>
+                    <td>{{d.last_contact}}
+
+
+                    </td>
+                  </tr>
+                </tbody>
+                <p *ngIf="prospectList.length === 0">No entries</p>
+            </table>
+        </div>
+      </div>
+    </div>
+    </div>
+
+  </div>
+
+</div>
+
+ <!-- Template Section -->
+
+   <!-- Prospect template -->
+   <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Prospect Details</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="prospectDetails">
+        <div class="modal-body">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" formControlName="name">
+              </div>
+              <div class="form-group">
+                  <label>Contact Person</label>
+                  <input type="text" class="form-control" formControlName="contact_person">
+              </div>
+              <div class="form-group">
+                  <label>Contact Email</label>
+                  <input type="text" class="form-control" formControlName="contact_email" >
+              </div>
+              <div class="form-group">
+                  <label>Mobile</label>
+                  <input type="text" class="form-control" formControlName="contact_mobile">
+              </div>
+        </div>
+    </form>
+    </ng-template>
+   <!-- End of Prospect  -->
+
+
+   <!-- Prospect History -->
+   <ng-template #prospecthistory>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Prospect Acitity History</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th width="20%">Date</th>
+                <th width="30%">Activity</th>
+                <th width="50%">Notes</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="historyList.length > 0 ">
+              <tr *ngFor="let d of historyList">
+                <td>{{d.date}}</td>
+                <td>{{d.activity}}</td>
+                <td>{{d.notes}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      </ng-template>
+
+
+   <!-- End of Prospect History -->

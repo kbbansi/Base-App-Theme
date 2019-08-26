@@ -1,0 +1,123 @@
+<div class="animate FadeIn">
+  <div class="row">
+    <div class="col-lg col-lg-12">
+
+
+      <div class="card">
+        <div class="card-header">Departments</div>
+        <div class="card-body">
+
+          <p>
+            <button class="btn btn-primary block" (click)="opendepartmentsmodal(departmentmodal)"> Add New </button></p>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th width="2%"></th>
+                <th width="10%">ID</th>
+                <th width="20%">Name</th>
+                <th width="20%">HOD</th>
+                <th width="10%">Description</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="departmentlist.length > 0">
+              <tr *ngFor="let d of departmentlist">
+
+
+                <td>
+                  <div class="btn-group" dropdown>
+                    <span class="caret" dropdownToggle class="dropdown-toggle"></span>
+                    <ul *dropdownMenu class="dropdown-menu" role="menu">
+                      <li role="menuitem"><a class="dropdown-item"
+                          (click)="openUpdateDepartmentModal(d, updateDepartmentModal)">Update </a></li>
+                    </ul>
+
+                  </div>
+                </td>
+                <td>{{d.id}}</td>
+                <td>{{d.name}}</td>
+                <td>{{d.hod}}</td>
+                <td>{{d.description}}</td>
+              </tr>
+            </tbody>
+
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #departmentmodal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Add Department</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]="departmentmodalForm">
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" formControlName="name" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>HOD</label>
+        <input type="text" class="form-control" #hod formControlName="hod">
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea type="text" class="form-control" #description formControlName="description"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="savedepartment()">Save</button>
+    </div>
+  </form>
+
+</ng-template>
+
+<ng-template #updateDepartmentModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Update Department</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]= "updateDepartmentModalForm">
+    <div class="modal-body">
+        
+         <div class="form-group">
+            <label>Department ID</label>
+            <input type="text" formControlName="departmentid" class="form-control" disabled="true" >
+        </div>
+      
+
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" formControlName="name" class="form-control">
+      </div>
+
+        <div class="form-group">
+            <label>HOD</label>
+            <input type="text" formControlName="hod" class="form-control" >
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea type="text" class="form-control" #description formControlName="description"></textarea>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="updateDepartment()" [disabled]="updateDepartmentModalForm.invalid" >Update</button>
+    </div>
+</form>
+</ng-template>
