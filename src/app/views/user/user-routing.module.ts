@@ -21,13 +21,13 @@ const routes: Routes = [
     children: [
 
 
-      {
-        path: 'employee',
-        component: StockComponent,
-        data: {
-          title: 'Employee'
-        }
-      },
+      // {
+      //   path: 'employee',
+      //   component: StockComponent,
+      //   data: {
+      //     title: 'Employee'
+      //   }
+      // },
       {
         path: 'request',
         component: InputComponent,

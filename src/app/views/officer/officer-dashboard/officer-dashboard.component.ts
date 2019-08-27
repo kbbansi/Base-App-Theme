@@ -258,21 +258,21 @@ export class OfficerDashboardComponent implements OnInit {
       status: 'Approved'
     });
     console.log(this.addRequestFormModal.value);
-    // this.userService.SaveGraRequest(this.addRequestFormModal.value).subscribe( response => {
-    //   if (response['status'] === 1) {
-    //     this.Toast.success('Saved Successfully', 'GRA-TRACKING').then((toast) => {
-    //       this.addRequestFormModal.reset();
-    //       this.ngOnInit();
-    //     });
-    //     this.modalRef.hide();
-    //   } else if (response['status'] === 0) {
-    //     this.Toast.error('Unsuccessful', 'GRA-TRACKING').then((toast) => {
-    //       this.addRequestFormModal.reset();
-    //       this.ngOnInit();
-    //     });
-    //     this.modalRef.hide();
-    //   }
-    // })
+    this.userService.SaveGraRequest(this.addRequestFormModal.value).subscribe( response => {
+      if (response['status'] === 1) {
+        this.Toast.success('Saved Successfully', 'GRA-TRACKING').then((toast) => {
+          this.addRequestFormModal.reset();
+          this.ngOnInit();
+        });
+        this.modalRef.hide();
+      } else if (response['status'] === 0) {
+        this.Toast.error('Unsuccessful', 'GRA-TRACKING').then((toast) => {
+          this.addRequestFormModal.reset();
+          this.ngOnInit();
+        });
+        this.modalRef.hide();
+      }
+    })
   }
 
   rejectRequest() {

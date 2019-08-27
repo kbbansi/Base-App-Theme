@@ -57,50 +57,6 @@ export class MenuItems {
           // },
         ]);
         break;
-
-      default:
-        observer.next([
-          // {
-          //   name: 'Dashboard',
-          //   url: '/dashboard',
-          //   icon: 'icon-speedometer',
-          // },
-          // {
-          //      name: 'Dashboard',
-          //      url: '/admin/setup',
-          //      icon: 'icon-speedometer'
-          //    },
-          // {
-          //   name: 'Sales',
-          //   url: '/user/input',
-          //   icon: 'icon-bell'
-          // },
-          {
-            name: 'Employee',
-            url: '/user/employee',
-            icon: 'icon-user'
-          },
-
-
-          {
-            name: 'Departments',
-            url: '/user/departments',
-            icon: 'icon-envelope'
-          },
-          {
-            name: 'DateTime',
-            url: '/user/date-picker',
-            icon: 'icon-settings'
-          },
-
-          {
-            name: 'Attendance',
-            url: '/user/attendance',
-            icon: 'icon-bell'
-          },
-
-        ]);
-        break;
     }
     observer.complete()
   });

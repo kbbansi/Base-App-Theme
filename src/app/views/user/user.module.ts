@@ -5,7 +5,6 @@ import { UserRoutingModule } from './user-routing.module';
 import { TabsModule, ModalModule, BsDropdownModule } from 'ngx-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from './input/input.component';
-import { StockComponent } from './stock/stock.component';
 import { ReportsComponent } from './reports/reports.component';
 import { StockbalanceComponent } from './stockbalance/stockbalance.component';
 import { DepartmentComponent } from './departments/departments.component';
@@ -13,7 +12,7 @@ import { AttendanceComponent } from './attendance/attendance.component';
 import { FormsModule } from '@angular/forms';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { EmployeeComponent } from './employee/employee.component';
+import { StockComponent} from './stock/stock.component';
 
 @NgModule({
   imports: [
@@ -23,9 +22,9 @@ import { EmployeeComponent } from './employee/employee.component';
      BsDropdownModule, FormsModule, BsDatepickerModule.forRoot()
 
   ],
-  declarations: [SetupComponent, InputComponent, StockComponent,
+  declarations: [SetupComponent, InputComponent,
      ReportsComponent,
      StockbalanceComponent, DepartmentComponent,
-     AttendanceComponent, DatePickerComponent, EmployeeComponent]
+     AttendanceComponent, DatePickerComponent]
 })
 export class UserModule { }

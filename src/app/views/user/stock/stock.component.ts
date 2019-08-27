@@ -4,12 +4,8 @@ import { UserService } from '../../../services/user.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 
-import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 var $ = require('jquery');
 require('../../../../../node_modules/jquery-csv/src/jquery.csv.js');
-
-import * as Papa from 'papaparse';
-import { FileUploadModule } from 'ng2-file-upload/ng2-file-upload';
 
 const URL = 'https://cragdb.herokuapp.com/api/sign-s3/';
 

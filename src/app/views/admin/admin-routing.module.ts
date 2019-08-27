@@ -6,9 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {CourseProviderComponent} from './course-provider/course-provider.component';
 import {TravelagentsComponent} from './travelagents/travelagents.component';
 import {ExchangeRatesComponent} from './exchange-rates/exchange-rates.component';
-import {EmployeesComponent} from './employees/employees.component';
-import {EmployeeComponent} from '../user/employee/employee.component';
-import {StockComponent} from '../user/stock/stock.component';
+import { EmployeeComponent} from './employee/employee.component';
 
 
 const routes: Routes = [
@@ -41,7 +39,7 @@ const routes: Routes = [
       },
       {
         path: 'employees',
-        component: StockComponent,
+        component: EmployeeComponent,
         data: {
           title: 'Employees'
         }

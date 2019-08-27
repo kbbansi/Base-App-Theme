@@ -9,13 +9,14 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CourseProviderComponent } from './course-provider/course-provider.component';
 import { TravelagentsComponent } from './travelagents/travelagents.component';
 import { ExchangeRatesComponent } from './exchange-rates/exchange-rates.component';
-import {StockComponent} from '../user/stock/stock.component';
 import {BsDropdownModule} from 'ngx-bootstrap';
+import { EmployeeComponent } from './employee/employee.component';
 
 @NgModule({
   imports: [
     CommonModule, AdminRoutingModule, ReactiveFormsModule, TabsModule, ModalModule.forRoot(), BsDropdownModule
   ],
-  declarations: [UserComponent, SetupComponent, CourseProviderComponent, TravelagentsComponent, ExchangeRatesComponent, StockComponent]
+  declarations: [UserComponent, SetupComponent, CourseProviderComponent, TravelagentsComponent, ExchangeRatesComponent,
+    EmployeeComponent]
 })
 export class AdminModule { }
