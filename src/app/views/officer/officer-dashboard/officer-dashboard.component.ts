@@ -191,7 +191,7 @@ export class OfficerDashboardComponent implements OnInit {
     console.log(endDate);
     days = moment.duration(endDate.diff(startDate));
     number = days.asDays().valueOf();
-    alert(number);
+
     // pDiem = number * 1000; // dry run
     rank = this.addRequestFormModal.value['rank'];
     console.log(rank);
@@ -234,6 +234,7 @@ export class OfficerDashboardComponent implements OnInit {
   }
 
   loadTravelAgentFees() {
+    console.log(this.addRequestFormModal.value.travelagent);
     this.userService.findTravelAgentFees(this.addRequestFormModal.value).subscribe(response => {
       this.something = response;
       console.log(this.something);

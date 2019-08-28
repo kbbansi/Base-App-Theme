@@ -47,7 +47,7 @@ export class MenuItems {
         observer.next([
           {
             name: 'Dashboard',
-            url: '/officer/officer-dashboard',
+            url: '/officer/dashboard',
             icon: 'icon-speedometer'
           },
           // {
