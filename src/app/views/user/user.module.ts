@@ -25,6 +25,6 @@ import { StockComponent} from './stock/stock.component';
   declarations: [SetupComponent, InputComponent,
      ReportsComponent,
      StockbalanceComponent, DepartmentComponent,
-     AttendanceComponent, DatePickerComponent]
+     AttendanceComponent, DatePickerComponent, StockComponent]
 })
 export class UserModule { }
