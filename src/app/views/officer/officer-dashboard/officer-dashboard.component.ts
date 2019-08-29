@@ -110,7 +110,7 @@ export class OfficerDashboardComponent implements OnInit {
     this.modalRef = this.ModalService.show(template, {class: 'modal-lg'});
   }
 
-  loadOneEmployee(d) {
+  loadOneEmployee = d => {
     console.log(this.addRequestFormModal.value.employeeid);
     this.employeeDataList = {};
     this.userService.loadOneEmployee(d).subscribe(response => {
@@ -124,7 +124,7 @@ export class OfficerDashboardComponent implements OnInit {
         rank: this.employeeDataList[0].rank
       })
     })
-  } // brilliant idea but will be easier if Database where built around the concept
+  }; // brilliant idea but will be easier if Database where built around the concept
 
   loadData() {
     this.employeeDataList = {};
@@ -156,10 +156,10 @@ export class OfficerDashboardComponent implements OnInit {
     });
 
     this.currencyList = {};
-    this.userService.loadexchangelist().subscribe(response => {
+    this.userService.LoadGraExchangeRate().subscribe(response => {
       this.something = response;
       console.log(this.something);
-      this.currencyList = this.something;
+      this.currencyList = this.something.message;
     })
   }
 
@@ -169,7 +169,7 @@ export class OfficerDashboardComponent implements OnInit {
   }
 
   compute() {
-    this.userService.findrate(this.addRequestFormModal.value).subscribe(response => {
+    this.userService.findExchangeRate(this.addRequestFormModal.value['currency']).subscribe(response => {
       this.something = response;
       console.log(this.something);
 
@@ -191,7 +191,6 @@ export class OfficerDashboardComponent implements OnInit {
     console.log(endDate);
     days = moment.duration(endDate.diff(startDate));
     number = days.asDays().valueOf();
-
     // pDiem = number * 1000; // dry run
     rank = this.addRequestFormModal.value['rank'];
     console.log(rank);
@@ -222,7 +221,7 @@ export class OfficerDashboardComponent implements OnInit {
       perdiem: pDiem.toFixed(2),
       reviewedby: userID
     })
-}
+  }
 
   loadTravelAgents() {
     this.travelAgentList = {};
@@ -234,8 +233,8 @@ export class OfficerDashboardComponent implements OnInit {
   }
 
   loadTravelAgentFees() {
-    console.log(this.addRequestFormModal.value.travelagent);
-    this.userService.findTravelAgentFees(this.addRequestFormModal.value).subscribe(response => {
+    console.log(this.addRequestFormModal.value['travelagent']);
+    this.userService.findTravelAgentFees(this.addRequestFormModal.value['travelagent']).subscribe(response => {
       this.something = response;
       console.log(this.something);
       this.addRequestFormModal.patchValue({
@@ -245,9 +244,10 @@ export class OfficerDashboardComponent implements OnInit {
   }
 
   loadCourseProviderFees() {
-    this.userService.findCourseProviderFees(this.addRequestFormModal.value).subscribe(response => {
+    console.log(this.addRequestFormModal.value['courseprovider']);
+    this.userService.findCourseProviderFees(this.addRequestFormModal.value['courseprovider']).subscribe(response => {
       this.something = response;
-
+      console.log(this.something);
       this.addRequestFormModal.patchValue({
         coursecharge: this.something[0].amount
       })
@@ -295,6 +295,12 @@ export class OfficerDashboardComponent implements OnInit {
         this.modalRef.hide();
       }
     })
+  }
+
+  StartAfresh() {
+    if (this.addRequestFormModal.value) {
+      this.addRequestFormModal.reset();
+    }
   }
 }
 

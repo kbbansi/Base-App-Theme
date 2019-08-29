@@ -132,173 +132,175 @@
     </button>
   </div>
 
-  <form [formGroup]="addRequestFormModal">
-    <div class="modal-body">
-<!--Employee ID-->
-      <label>Employee ID</label>
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Employee ID" formControlName="employeeid" #employeeid>
-        <div class="input-group-append">
-          <button class="btn btn-outline-primary" (click)="loadEmployeeID()" type="button">Search</button>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label>Employee Name</label>
-            <input type="text" formControlName="employeename" class="form-control" #employeename readonly="">
+  <div class="px-3">
+    <form [formGroup]="addRequestFormModal">
+      <div class="modal-body">
+        <!--Employee ID      -->
+        <label>Employee ID</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Employee ID" formControlName="employeeid" #employeeid>
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary" (click)="loadEmployeeID()" type="button">Search</button>
           </div>
         </div>
 
-        <div class="col">
-          <div class="form-group">
-            <label>Rank</label>
-            <input type="text" formControlName="rank" class="form-control" #rank readonly="">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Employee Name</label>
+              <input type="text" formControlName="employeename" class="form-control" #employeename readonly="">
+            </div>
           </div>
-        </div>
-      </div>
 
-      <!--Request Type -->
-      <div class="form-group">
-        <label>Type</label> 
-        <select class="form-control" #type formControlName="type">
-          <option value="Medical">Medical Check Up</option>
-          <option value="Training">Training</option>
-        </select>
-      </div>
-
-        <!--Section for Visa checks -->
-      <div class="row">
-        <div class="col">
-          <div class="form-group" *ngIf="this.addRequestFormModal.get('type').value === 'Training'">
-            <!--This is where we use the ngIf to get the other required fields -->
-            <label>Visa</label>
-            <select class="form-control" #visa formControlName="visa">
-              <option value="Travel">Travel Agent</option>
-              <option value="Internal">Internal</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <!--End of Section for Visa Checks -->
-
-      <!--Section for Travel Agents and Costs -->
-      <div class="row">
-        <div class="col">
-          <div class="form-group" *ngIf="this.addRequestFormModal.get('visa').value === 'Travel'">
-            <label>Travel Agent</label>
-            <select class="form-control" #travelagent (change)="loadTravelAgentFees()" formControlName="travelagent"
-              *ngIf="travelAgentList.length > 0">
-              <option *ngFor="let t of travelAgentList" value="{{t.name}}">{{t.name}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group" *ngIf="this.addRequestFormModal.get('visa').value === 'Travel'">
-            <label>Visa Charge</label>
-            <input type="text" formControlName="visafees" class="form-control" readonly>
-          </div>
-        </div>
-      </div>
-      <!--End of Section for Travel Agents and Costs -->
-
-      <!--Section for Course Provider(Training) and Costs -->
-      <div class="row">
-        <div class="col">
-          <div class="form-group" *ngIf="this.addRequestFormModal.get('type').value === 'Training'">
-            <label>Course Providers</label>
-            <select class="form-control" #courseProvider (change)="loadCourseProviderFees()"
-              formControlName="courseprovider" *ngIf="courseProviderList.length > 0">
-              <option *ngFor="let c of courseProviderList" value="{{c.name}}">{{c.name}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group" *ngIf="this.addRequestFormModal.get('type').value === 'Training'">
-            <label>Course Cost</label>
-            <input type="text" formControlName="coursecharge" class="form-control" readonly>
-          </div>
-        </div>
-      </div>
-      <!--End of Section for Course Provider and Costs      -->
-
-      <!--Section for Medical Provider and Costs      -->
-      <div class="row">
-        <div class="col">
-          <div class="form-group" *ngIf="this.addRequestFormModal.get('type').value === 'Medical'">
-            <label>Medical Providers</label>
-            <select class="form-control" #medical formControlName="medicalfacility"
-              *ngIf="medicalFacilityList.length > 0">
-              <option *ngFor="let t of medicalFacilityList" value="{{t.name}}">{{t.name}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group" *ngIf="this.addRequestFormModal.get('type').value === 'Medical'">
-            <label>Invoice</label>
-            <input type="text" formControlName="invoice" class="form-control">
-          </div>
-        </div>
-      </div>
-      <!--End of Section for Medical Provider and Costs -->
-
-      <!--Section for Dates -->
-      <div class="row">
-        <div class="col">
-          <label>Start Date</label>
-          <input type="date" formControlName="datefrom" class="form-control">
-        </div>
-        <div class="col">
-          <label>End Date</label>
-          <input type="date" formControlName="dateto" class="form-control">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label>Amount</label>
-            <input type="number" formControlName="amount" class="form-control">
+          <div class="col">
+            <div class="form-group">
+              <label>Rank</label>
+              <input type="text" formControlName="rank" class="form-control" #rank readonly="">
+            </div>
           </div>
         </div>
 
-        <div class="col">
-          <div class="form-group">
-            <label>Currency</label>
-            <select class="form-control" #currency (change)="compute()" formControlName="currency"
-              *ngIf="currencyList.length > 0">
-              <option *ngFor="let c of currencyList" value="{{ c.currency }}">{{ c.currency }}</option>
-            </select>
-          </div>
+        <!--Request Type-->
+        <div class="form-group">
+          <label>Type</label> <!-- Should be a drop down -->
+          <select class="form-control" #type formControlName="type">
+            <option value="">Select an Option</option>
+            <option value="Medical">Medical Check Up</option>
+            <option value="Training">Training</option>
+          </select>
         </div>
 
-        <div class="col">
-          <div class="form-group">
-            <label>Rates</label>
-            <input type="text" formControlName="exchangerate" class="form-control" readonly>
+        <!--  Section for Visa checks-->
+        <div class="row">
+          <div class="col">
+            <div class="form-group" *ngIf="this.addRequestFormModal.get('type').value === 'Training'"> <!--This is where we use the ngIf to get the other required fields -->
+              <label>Visa</label>
+              <select class="form-control" #visa formControlName="visa">
+                <option value="">Select an Option</option>
+                <option value="Travel">Travel Agent</option>
+                <option value="Internal">Internal</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!--End of Section for Visa Checks      -->
+
+        <!--Section for Travel Agents and Costs      -->
+        <div class="row">
+          <div class="col">
+            <div class="form-group" *ngIf="this.addRequestFormModal.get('visa').value === 'Travel'">
+              <label>Travel Agent</label>
+              <select class="form-control" #travelagent (change)="loadTravelAgentFees()" formControlName="travelagent" *ngIf="travelAgentList.length > 0">
+                <option *ngFor="let t of travelAgentList" value="{{t.id}}">{{t.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group" *ngIf="this.addRequestFormModal.get('visa').value === 'Travel'">
+              <label>Visa Charge</label>
+              <input type="text" formControlName="visafees" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+        <!--End of Section for Travel Agents and Costs      -->
+
+        <!--Section for Course Provider(Training) and Costs      -->
+        <div class="row">
+          <div class="col">
+            <div class="form-group" *ngIf="this.addRequestFormModal.get('type').value === 'Training'">
+              <label>Course Providers</label>
+              <select class="form-control" #courseProvider (change)="loadCourseProviderFees()" formControlName="courseprovider" *ngIf="courseProviderList.length > 0">
+                <option *ngFor="let c of courseProviderList" value="{{c.id}}">{{c.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group" *ngIf="this.addRequestFormModal.get('type').value === 'Training'">
+              <label>Course Cost</label>
+              <input type="text" formControlName="coursecharge" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+        <!--End of Section for Course Provider and Costs      -->
+
+        <!--Section for Medical Provider and Costs      -->
+        <div class="row">
+          <div class="col">
+            <div class="form-group" *ngIf="this.addRequestFormModal.get('type').value === 'Medical'">
+              <label>Medical Providers</label>
+              <select class="form-control" #medical formControlName="medicalfacility" *ngIf="medicalFacilityList.length > 0">
+                <option *ngFor="let t of medicalFacilityList" value="{{t.name}}">{{t.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group" *ngIf="this.addRequestFormModal.get('type').value === 'Medical'">
+              <label>Invoice</label>
+              <input type="text" formControlName="invoice" class="form-control">
+            </div>
+          </div>
+        </div>
+        <!--End of Section for Medical Provider and Costs      -->
+
+        <!--Section for Dates-->
+        <div class="row">
+          <div class="col">
+            <label>Start Date</label>
+            <input type="date" formControlName="datefrom" class="form-control">
+          </div>
+          <div class="col">
+            <label>End Date</label>
+            <input type="date" formControlName="dateto" class="form-control">
+          </div>
+        </div>
+        <!--End of Section for Dates-->
+
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Amount</label>
+              <input type="number" formControlName="amount" class="form-control">
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form-group">
+              <label>Currency</label>
+              <select class="form-control" #currency (change)="compute()" formControlName="currency" *ngIf="currencyList.length > 0">
+                <option *ngFor="let c of currencyList" value="{{ c.id }}">{{ c.currency }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form-group">
+              <label>Rates</label>
+              <input type="text" formControlName="exchangerate" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Per Diem</label>
+              <input type="text" formControlName="perdiem" class="form-control" readonly>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label>Total</label>
+              <input type="text" formControlName="total" class="form-control" readonly>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label>Per Diem</label>
-            <input type="text" formControlName="perdiem" class="form-control" readonly>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <label>Total</label>
-            <input type="text" formControlName="total" class="form-control" readonly>
-          </div>
-        </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-light" (click)="approveRequest()">Approve</button>
+        <button class="btn btn-outline-danger" (click)="rejectRequest()">Reject</button>
+        <button class="btn btn-outline-warning" (click)="StartAfresh()">Reset</button>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary" (click)="approveRequest()">Approve</button>
-      <button class="btn btn-danger" (click)="rejectRequest()">Reject</button>
-    </div>
-  </form>
+    </form>
+  </div>
 </ng-template>
 <!-- Old Request Modal -->
 
